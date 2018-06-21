@@ -15,11 +15,7 @@ export const timeLog = {
                         id : userId
                     },
                 },
-                tags: {
-                    connect:{
-                        id: tagIds
-                    }
-                },
+
             },
         },
         info

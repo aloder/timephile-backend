@@ -7,6 +7,7 @@ type Query {
   timeLog(id: ID!): TimeLog
   timeTag(id: ID!): TimeTag
   timeLogs(userId: ID!): [TimeLog]!
+  timeLogsRange(userId: ID!, startDate: DateTime!, endDate: DateTime ): [TimeLog]!
   timeTags(userId: ID!): [TimeTag]!
   me: User
 }
@@ -20,10 +21,10 @@ type Mutation {
 
   createTimeLog(
     title: String!, 
-    text: String!,
+    text: String,
     startTime: DateTime,
     endTime: DateTime,
-    tagIds: [ID!]!
+    tagIds: [ID!]
   ): TimeLog
 
   createTimeTag(

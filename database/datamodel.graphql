@@ -1,13 +1,3 @@
-type Post {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  isPublished: Boolean! @default(value: "false")
-  title: String!
-  text: String!
-  author: User!
-}
-
 type User {
   id: ID! @unique
   createdAt: DateTime!
@@ -15,7 +5,6 @@ type User {
   email: String! @unique
   password: String!
   name: String!
-  posts: [Post!]!
   timeLogs: [TimeLog!]! @relation(name: "TimeLogsByUser", onDelete: SET_NULL)
   timeTags: [TimeTag!]! @relation(name:"TimeTagsByUser", onDelete: SET_NULL)
   role: ROLE_TAG! @default(value: CUSTOMER)
@@ -26,7 +15,7 @@ type TimeTag {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  description: String!
+  description: String
   user: User @relation(name:"TimeTagsByUser", onDelete: SET_NULL)
   isGeneral: Boolean @default(value: false)
   timeLogs: [TimeLog!]! @relation(name: "TimeTags", onDelete: SET_NULL)
@@ -37,9 +26,10 @@ type TimeLog {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
-  text: String!
+  text: String
   startTime: DateTime
   endTime: DateTime
+  totalTime: Int
   user: User! @relation(name: "TimeLogsByUser", onDelete: SET_NULL)
   tags: [TimeTag!]! @relation(name: "TimeTags", onDelete: SET_NULL)
 }
