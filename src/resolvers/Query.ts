@@ -1,22 +1,6 @@
-import { Context, getUserId } from '../utils'
+import { Context, getUserId } from '../utils';
 
 export const Query = {
-  feed(parent, args, ctx: Context, info) {
-    return ctx.db.query.posts({ where: { isPublished: true } }, info)
-  },
-
-  drafts(parent, args, ctx: Context, info) {
-    const id = getUserId(ctx)
-
-    const where = {
-      isPublished: false,
-      author: {
-        id
-      }
-    }
-
-    return ctx.db.query.posts({ where }, info)
-  },
   timeLogsRange(parent, { userId, startDate, endDate }, ctx: Context, info) {
     const id = getUserId(ctx)
     if (id != userId) {
@@ -33,9 +17,6 @@ export const Query = {
         }
       }
     );  
-  },
-  post(parent, { id }, ctx: Context, info) {
-    return ctx.db.query.post({ where: { id } }, info)
   },
 
   me(parent, args, ctx: Context, info) {

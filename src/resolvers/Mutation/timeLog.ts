@@ -8,6 +8,11 @@ export const timeLog = {
             data: {
                 title,
                 text,
+                tags:{
+                    connect : {
+                        id: tagIds
+                    }
+                },
                 startTime,
                 endTime,
                 user:{ 
