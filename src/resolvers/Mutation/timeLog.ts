@@ -9,8 +9,8 @@ export const timeLog = {
                 title,
                 text,
                 tags:{
-                    connect : {
-                        id: tagIds
+                    connect: {
+                        id : (tagIds && tagIds.length > 0) ? tagIds : undefined
                     }
                 },
                 startTime,
@@ -25,5 +25,23 @@ export const timeLog = {
         },
         info
         )
+    },
+    async deleteTimeLog(parent, { id }, ctx: Context, info) {
+        const userId = getUserId(ctx);
+        const timeLog = await ctx.db.query.timeLog({
+            where: {
+                id
+            }
+        })
+        if (timeLog.user.id === userId){
+            return await ctx.db.mutation.deleteTimeLog(
+                {
+                    where:{
+                        id
+                    }
+                },
+            info);
+        }
+        throw new Error('Not Authorized to delete');
     }
 }

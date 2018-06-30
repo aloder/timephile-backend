@@ -15,8 +15,8 @@ export const Query = {
             startTime_gte: startDate,
             startTime_lt: endDate
         }
-      }
-    );  
+      },
+      info);  
   },
 
   me(parent, args, ctx: Context, info) {

@@ -13,6 +13,9 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
 
+  deleteTimeLog(id: ID!): TimeLog
+  deleteTimeTag(id: ID!): TimeTag
+
   createTimeLog(
     title: String!, 
     text: String,
