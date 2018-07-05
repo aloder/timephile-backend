@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Jun 20 2018 23:54:05 GMT-0500 (Central Daylight Time)
+# timestamp: Wed Jul 04 2018 21:52:47 GMT-0500 (Central Daylight Time)
 
 type AggregateTimeLog {
   count: Int!
@@ -109,9 +109,12 @@ type TimeLog implements Node {
   updatedAt: DateTime!
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user(where: UserWhereInput): User!
   tags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag!]
 }
@@ -129,9 +132,12 @@ type TimeLogConnection {
 input TimeLogCreateInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserCreateOneWithoutTimeLogsInput!
   tags: TimeTagCreateManyWithoutTimeLogsInput
 }
@@ -149,18 +155,24 @@ input TimeLogCreateManyWithoutUserInput {
 input TimeLogCreateWithoutTagsInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserCreateOneWithoutTimeLogsInput!
 }
 
 input TimeLogCreateWithoutUserInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   tags: TimeTagCreateManyWithoutTimeLogsInput
 }
 
@@ -184,12 +196,18 @@ enum TimeLogOrderByInput {
   title_DESC
   text_ASC
   text_DESC
+  date_ASC
+  date_DESC
+  isRange_ASC
+  isRange_DESC
   startTime_ASC
   startTime_DESC
   endTime_ASC
   endTime_DESC
   totalTime_ASC
   totalTime_DESC
+  deleted_ASC
+  deleted_DESC
 }
 
 type TimeLogPreviousValues {
@@ -198,9 +216,12 @@ type TimeLogPreviousValues {
   updatedAt: DateTime!
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
 }
 
 type TimeLogSubscriptionPayload {
@@ -245,9 +266,12 @@ input TimeLogSubscriptionWhereInput {
 input TimeLogUpdateInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserUpdateOneWithoutTimeLogsInput
   tags: TimeTagUpdateManyWithoutTimeLogsInput
 }
@@ -273,18 +297,24 @@ input TimeLogUpdateManyWithoutUserInput {
 input TimeLogUpdateWithoutTagsDataInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserUpdateOneWithoutTimeLogsInput
 }
 
 input TimeLogUpdateWithoutUserDataInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   tags: TimeTagUpdateManyWithoutTimeLogsInput
 }
 
@@ -483,6 +513,32 @@ input TimeLogWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
+  date: DateTime
+
+  """All values that are not equal to given value."""
+  date_not: DateTime
+
+  """All values that are contained in given list."""
+  date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  date_lte: DateTime
+
+  """All values greater than the given value."""
+  date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  date_gte: DateTime
+  isRange: Boolean
+
+  """All values that are not equal to given value."""
+  isRange_not: Boolean
   startTime: DateTime
 
   """All values that are not equal to given value."""
@@ -549,6 +605,10 @@ input TimeLogWhereInput {
 
   """All values greater than or equal the given value."""
   totalTime_gte: Int
+  deleted: Boolean
+
+  """All values that are not equal to given value."""
+  deleted_not: Boolean
   user: UserWhereInput
   tags_every: TimeTagWhereInput
   tags_some: TimeTagWhereInput

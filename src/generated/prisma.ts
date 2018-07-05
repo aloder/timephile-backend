@@ -179,9 +179,12 @@ type TimeLog implements Node {
   updatedAt: DateTime!
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user(where: UserWhereInput): User!
   tags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag!]
 }
@@ -199,9 +202,12 @@ type TimeLogConnection {
 input TimeLogCreateInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserCreateOneWithoutTimeLogsInput!
   tags: TimeTagCreateManyWithoutTimeLogsInput
 }
@@ -219,18 +225,24 @@ input TimeLogCreateManyWithoutUserInput {
 input TimeLogCreateWithoutTagsInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserCreateOneWithoutTimeLogsInput!
 }
 
 input TimeLogCreateWithoutUserInput {
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   tags: TimeTagCreateManyWithoutTimeLogsInput
 }
 
@@ -254,12 +266,18 @@ enum TimeLogOrderByInput {
   title_DESC
   text_ASC
   text_DESC
+  date_ASC
+  date_DESC
+  isRange_ASC
+  isRange_DESC
   startTime_ASC
   startTime_DESC
   endTime_ASC
   endTime_DESC
   totalTime_ASC
   totalTime_DESC
+  deleted_ASC
+  deleted_DESC
 }
 
 type TimeLogPreviousValues {
@@ -268,9 +286,12 @@ type TimeLogPreviousValues {
   updatedAt: DateTime!
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
 }
 
 type TimeLogSubscriptionPayload {
@@ -315,9 +336,12 @@ input TimeLogSubscriptionWhereInput {
 input TimeLogUpdateInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserUpdateOneWithoutTimeLogsInput
   tags: TimeTagUpdateManyWithoutTimeLogsInput
 }
@@ -343,18 +367,24 @@ input TimeLogUpdateManyWithoutUserInput {
 input TimeLogUpdateWithoutTagsDataInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   user: UserUpdateOneWithoutTimeLogsInput
 }
 
 input TimeLogUpdateWithoutUserDataInput {
   title: String
   text: String
+  date: DateTime
+  isRange: Boolean
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean
   tags: TimeTagUpdateManyWithoutTimeLogsInput
 }
 
@@ -553,6 +583,32 @@ input TimeLogWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
+  date: DateTime
+
+  """All values that are not equal to given value."""
+  date_not: DateTime
+
+  """All values that are contained in given list."""
+  date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  date_lte: DateTime
+
+  """All values greater than the given value."""
+  date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  date_gte: DateTime
+  isRange: Boolean
+
+  """All values that are not equal to given value."""
+  isRange_not: Boolean
   startTime: DateTime
 
   """All values that are not equal to given value."""
@@ -619,6 +675,10 @@ input TimeLogWhereInput {
 
   """All values greater than or equal the given value."""
   totalTime_gte: Int
+  deleted: Boolean
+
+  """All values that are not equal to given value."""
+  deleted_not: Boolean
   user: UserWhereInput
   tags_every: TimeTagWhereInput
   tags_some: TimeTagWhereInput
@@ -1455,12 +1515,18 @@ export type TimeLogOrderByInput =   'id_ASC' |
   'title_DESC' |
   'text_ASC' |
   'text_DESC' |
+  'date_ASC' |
+  'date_DESC' |
+  'isRange_ASC' |
+  'isRange_DESC' |
   'startTime_ASC' |
   'startTime_DESC' |
   'endTime_ASC' |
   'endTime_DESC' |
   'totalTime_ASC' |
-  'totalTime_DESC'
+  'totalTime_DESC' |
+  'deleted_ASC' |
+  'deleted_DESC'
 
 export type ROLE_TAG =   'ADMIN' |
   'CUSTOMER'
@@ -1575,83 +1641,15 @@ export interface UserWhereInput {
   timeTags_none?: TimeTagWhereInput
 }
 
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  name?: String
-  role?: ROLE_TAG
-  timeLogs?: TimeLogUpdateManyWithoutUserInput
-  timeTags?: TimeTagUpdateManyWithoutUserInput
+export interface TimeTagCreateManyWithoutTimeLogsInput {
+  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
+  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
 }
 
-export interface TimeTagWhereInput {
-  AND?: TimeTagWhereInput[] | TimeTagWhereInput
-  OR?: TimeTagWhereInput[] | TimeTagWhereInput
-  NOT?: TimeTagWhereInput[] | TimeTagWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  description?: String
-  description_not?: String
-  description_in?: String[] | String
-  description_not_in?: String[] | String
-  description_lt?: String
-  description_lte?: String
-  description_gt?: String
-  description_gte?: String
-  description_contains?: String
-  description_not_contains?: String
-  description_starts_with?: String
-  description_not_starts_with?: String
-  description_ends_with?: String
-  description_not_ends_with?: String
-  isGeneral?: Boolean
-  isGeneral_not?: Boolean
-  user?: UserWhereInput
-  timeLogs_every?: TimeLogWhereInput
-  timeLogs_some?: TimeLogWhereInput
-  timeLogs_none?: TimeLogWhereInput
+export interface TimeLogUpsertWithWhereUniqueWithoutUserInput {
+  where: TimeLogWhereUniqueInput
+  update: TimeLogUpdateWithoutUserDataInput
+  create: TimeLogCreateWithoutUserInput
 }
 
 export interface TimeTagCreateWithoutTimeLogsInput {
@@ -1661,10 +1659,13 @@ export interface TimeTagCreateWithoutTimeLogsInput {
   user?: UserCreateOneWithoutTimeTagsInput
 }
 
-export interface TimeLogUpsertWithWhereUniqueWithoutUserInput {
-  where: TimeLogWhereUniqueInput
-  update: TimeLogUpdateWithoutUserDataInput
-  create: TimeLogCreateWithoutUserInput
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  name?: String
+  role?: ROLE_TAG
+  timeLogs?: TimeLogUpdateManyWithoutUserInput
+  timeTags?: TimeTagUpdateManyWithoutUserInput
 }
 
 export interface UserCreateOneWithoutTimeTagsInput {
@@ -1672,13 +1673,15 @@ export interface UserCreateOneWithoutTimeTagsInput {
   connect?: UserWhereUniqueInput
 }
 
-export interface TimeLogUpdateManyWithoutUserInput {
-  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  update?: TimeLogUpdateWithWhereUniqueWithoutUserInput[] | TimeLogUpdateWithWhereUniqueWithoutUserInput
-  upsert?: TimeLogUpsertWithWhereUniqueWithoutUserInput[] | TimeLogUpsertWithWhereUniqueWithoutUserInput
+export interface TimeTagSubscriptionWhereInput {
+  AND?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  OR?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  NOT?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: TimeTagWhereInput
 }
 
 export interface UserCreateWithoutTimeTagsInput {
@@ -1751,6 +1754,16 @@ export interface TimeLogWhereInput {
   text_not_starts_with?: String
   text_ends_with?: String
   text_not_ends_with?: String
+  date?: DateTime
+  date_not?: DateTime
+  date_in?: DateTime[] | DateTime
+  date_not_in?: DateTime[] | DateTime
+  date_lt?: DateTime
+  date_lte?: DateTime
+  date_gt?: DateTime
+  date_gte?: DateTime
+  isRange?: Boolean
+  isRange_not?: Boolean
   startTime?: DateTime
   startTime_not?: DateTime
   startTime_in?: DateTime[] | DateTime
@@ -1775,6 +1788,8 @@ export interface TimeLogWhereInput {
   totalTime_lte?: Int
   totalTime_gt?: Int
   totalTime_gte?: Int
+  deleted?: Boolean
+  deleted_not?: Boolean
   user?: UserWhereInput
   tags_every?: TimeTagWhereInput
   tags_some?: TimeTagWhereInput
@@ -1786,15 +1801,17 @@ export interface TimeTagCreateManyWithoutUserInput {
   connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
 }
 
-export interface TimeTagSubscriptionWhereInput {
-  AND?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  OR?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  NOT?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: TimeTagWhereInput
+export interface TimeLogUpdateInput {
+  title?: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user?: UserUpdateOneWithoutTimeLogsInput
+  tags?: TimeTagUpdateManyWithoutTimeLogsInput
 }
 
 export interface TimeTagCreateWithoutUserInput {
@@ -1821,93 +1838,19 @@ export interface TimeLogWhereUniqueInput {
 export interface TimeLogCreateWithoutTagsInput {
   title: String
   text?: String
+  date?: DateTime
+  isRange?: Boolean
   startTime?: DateTime
   endTime?: DateTime
   totalTime?: Int
+  deleted?: Boolean
   user: UserCreateOneWithoutTimeLogsInput
-}
-
-export interface TimeTagUpdateInput {
-  name?: String
-  description?: String
-  isGeneral?: Boolean
-  user?: UserUpdateOneWithoutTimeTagsInput
-  timeLogs?: TimeLogUpdateManyWithoutTagsInput
-}
-
-export interface TimeTagUpdateWithoutUserDataInput {
-  name?: String
-  description?: String
-  isGeneral?: Boolean
-  timeLogs?: TimeLogUpdateManyWithoutTagsInput
 }
 
 export interface TimeLogUpsertWithWhereUniqueWithoutTagsInput {
   where: TimeLogWhereUniqueInput
   update: TimeLogUpdateWithoutTagsDataInput
   create: TimeLogCreateWithoutTagsInput
-}
-
-export interface UserCreateWithoutTimeLogsInput {
-  email: String
-  password: String
-  name: String
-  role?: ROLE_TAG
-  timeTags?: TimeTagCreateManyWithoutUserInput
-}
-
-export interface UserUpdateWithoutTimeLogsDataInput {
-  email?: String
-  password?: String
-  name?: String
-  role?: ROLE_TAG
-  timeTags?: TimeTagUpdateManyWithoutUserInput
-}
-
-export interface TimeTagCreateInput {
-  name: String
-  description?: String
-  isGeneral?: Boolean
-  user?: UserCreateOneWithoutTimeTagsInput
-  timeLogs?: TimeLogCreateManyWithoutTagsInput
-}
-
-export interface TimeLogUpdateWithoutTagsDataInput {
-  title?: String
-  text?: String
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  user?: UserUpdateOneWithoutTimeLogsInput
-}
-
-export interface TimeLogCreateInput {
-  title: String
-  text?: String
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  user: UserCreateOneWithoutTimeLogsInput
-  tags?: TimeTagCreateManyWithoutTimeLogsInput
-}
-
-export interface TimeLogUpdateManyWithoutTagsInput {
-  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  update?: TimeLogUpdateWithWhereUniqueWithoutTagsInput[] | TimeLogUpdateWithWhereUniqueWithoutTagsInput
-  upsert?: TimeLogUpsertWithWhereUniqueWithoutTagsInput[] | TimeLogUpsertWithWhereUniqueWithoutTagsInput
-}
-
-export interface TimeTagUpdateWithWhereUniqueWithoutUserInput {
-  where: TimeTagWhereUniqueInput
-  data: TimeTagUpdateWithoutUserDataInput
-}
-
-export interface TimeLogCreateManyWithoutUserInput {
-  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
 }
 
 export interface TimeTagUpdateManyWithoutUserInput {
@@ -1919,14 +1862,151 @@ export interface TimeTagUpdateManyWithoutUserInput {
   upsert?: TimeTagUpsertWithWhereUniqueWithoutUserInput[] | TimeTagUpsertWithWhereUniqueWithoutUserInput
 }
 
-export interface TimeTagCreateManyWithoutTimeLogsInput {
-  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
-  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+export interface UserUpdateWithoutTimeLogsDataInput {
+  email?: String
+  password?: String
+  name?: String
+  role?: ROLE_TAG
+  timeTags?: TimeTagUpdateManyWithoutUserInput
 }
 
-export interface TimeLogUpdateWithWhereUniqueWithoutUserInput {
-  where: TimeLogWhereUniqueInput
-  data: TimeLogUpdateWithoutUserDataInput
+export interface UserCreateWithoutTimeLogsInput {
+  email: String
+  password: String
+  name: String
+  role?: ROLE_TAG
+  timeTags?: TimeTagCreateManyWithoutUserInput
+}
+
+export interface TimeLogUpdateWithoutTagsDataInput {
+  title?: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user?: UserUpdateOneWithoutTimeLogsInput
+}
+
+export interface TimeTagCreateInput {
+  name: String
+  description?: String
+  isGeneral?: Boolean
+  user?: UserCreateOneWithoutTimeTagsInput
+  timeLogs?: TimeLogCreateManyWithoutTagsInput
+}
+
+export interface TimeLogUpdateManyWithoutTagsInput {
+  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  update?: TimeLogUpdateWithWhereUniqueWithoutTagsInput[] | TimeLogUpdateWithWhereUniqueWithoutTagsInput
+  upsert?: TimeLogUpsertWithWhereUniqueWithoutTagsInput[] | TimeLogUpsertWithWhereUniqueWithoutTagsInput
+}
+
+export interface TimeLogCreateInput {
+  title: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user: UserCreateOneWithoutTimeLogsInput
+  tags?: TimeTagCreateManyWithoutTimeLogsInput
+}
+
+export interface TimeTagUpdateWithWhereUniqueWithoutUserInput {
+  where: TimeTagWhereUniqueInput
+  data: TimeTagUpdateWithoutUserDataInput
+}
+
+export interface TimeTagWhereInput {
+  AND?: TimeTagWhereInput[] | TimeTagWhereInput
+  OR?: TimeTagWhereInput[] | TimeTagWhereInput
+  NOT?: TimeTagWhereInput[] | TimeTagWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
+  isGeneral?: Boolean
+  isGeneral_not?: Boolean
+  user?: UserWhereInput
+  timeLogs_every?: TimeLogWhereInput
+  timeLogs_some?: TimeLogWhereInput
+  timeLogs_none?: TimeLogWhereInput
+}
+
+export interface TimeLogCreateManyWithoutUserInput {
+  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+}
+
+export interface TimeLogUpdateManyWithoutUserInput {
+  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  update?: TimeLogUpdateWithWhereUniqueWithoutUserInput[] | TimeLogUpdateWithWhereUniqueWithoutUserInput
+  upsert?: TimeLogUpsertWithWhereUniqueWithoutUserInput[] | TimeLogUpsertWithWhereUniqueWithoutUserInput
 }
 
 export interface TimeLogSubscriptionWhereInput {
@@ -1940,12 +2020,31 @@ export interface TimeLogSubscriptionWhereInput {
   node?: TimeLogWhereInput
 }
 
+export interface TimeLogUpdateWithWhereUniqueWithoutUserInput {
+  where: TimeLogWhereUniqueInput
+  data: TimeLogUpdateWithoutUserDataInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
 export interface TimeLogUpdateWithoutUserDataInput {
   title?: String
   text?: String
+  date?: DateTime
+  isRange?: Boolean
   startTime?: DateTime
   endTime?: DateTime
   totalTime?: Int
+  deleted?: Boolean
   tags?: TimeTagUpdateManyWithoutTimeLogsInput
 }
 
@@ -1962,10 +2061,9 @@ export interface TimeTagUpdateManyWithoutTimeLogsInput {
   upsert?: TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput[] | TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput
 }
 
-export interface TimeTagUpsertWithWhereUniqueWithoutUserInput {
-  where: TimeTagWhereUniqueInput
-  update: TimeTagUpdateWithoutUserDataInput
-  create: TimeTagCreateWithoutUserInput
+export interface UserUpsertWithoutTimeLogsInput {
+  update: UserUpdateWithoutTimeLogsDataInput
+  create: UserCreateWithoutTimeLogsInput
 }
 
 export interface TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput {
@@ -1973,12 +2071,9 @@ export interface TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput {
   data: TimeTagUpdateWithoutTimeLogsDataInput
 }
 
-export interface UserUpdateOneWithoutTimeLogsInput {
-  create?: UserCreateWithoutTimeLogsInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutTimeLogsDataInput
-  upsert?: UserUpsertWithoutTimeLogsInput
+export interface TimeLogUpdateWithWhereUniqueWithoutTagsInput {
+  where: TimeLogWhereUniqueInput
+  data: TimeLogUpdateWithoutTagsDataInput
 }
 
 export interface TimeTagUpdateWithoutTimeLogsDataInput {
@@ -2025,44 +2120,45 @@ export interface UserUpdateOneWithoutTimeTagsInput {
   upsert?: UserUpsertWithoutTimeTagsInput
 }
 
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
+export interface TimeTagUpdateInput {
+  name?: String
+  description?: String
+  isGeneral?: Boolean
+  user?: UserUpdateOneWithoutTimeTagsInput
+  timeLogs?: TimeLogUpdateManyWithoutTagsInput
 }
 
 export interface TimeLogCreateWithoutUserInput {
   title: String
   text?: String
+  date?: DateTime
+  isRange?: Boolean
   startTime?: DateTime
   endTime?: DateTime
   totalTime?: Int
+  deleted?: Boolean
   tags?: TimeTagCreateManyWithoutTimeLogsInput
 }
 
-export interface TimeLogUpdateWithWhereUniqueWithoutTagsInput {
-  where: TimeLogWhereUniqueInput
-  data: TimeLogUpdateWithoutTagsDataInput
+export interface TimeTagUpdateWithoutUserDataInput {
+  name?: String
+  description?: String
+  isGeneral?: Boolean
+  timeLogs?: TimeLogUpdateManyWithoutTagsInput
 }
 
-export interface UserUpsertWithoutTimeLogsInput {
-  update: UserUpdateWithoutTimeLogsDataInput
-  create: UserCreateWithoutTimeLogsInput
+export interface UserUpdateOneWithoutTimeLogsInput {
+  create?: UserCreateWithoutTimeLogsInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateWithoutTimeLogsDataInput
+  upsert?: UserUpsertWithoutTimeLogsInput
 }
 
-export interface TimeLogUpdateInput {
-  title?: String
-  text?: String
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  user?: UserUpdateOneWithoutTimeLogsInput
-  tags?: TimeTagUpdateManyWithoutTimeLogsInput
+export interface TimeTagUpsertWithWhereUniqueWithoutUserInput {
+  where: TimeTagWhereUniqueInput
+  update: TimeTagUpdateWithoutUserDataInput
+  create: TimeTagCreateWithoutUserInput
 }
 
 /*
@@ -2079,42 +2175,23 @@ export interface TimeLogPreviousValues {
   updatedAt: DateTime
   title: String
   text?: String
+  date?: DateTime
+  isRange?: Boolean
   startTime?: DateTime
   endTime?: DateTime
   totalTime?: Int
+  deleted?: Boolean
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
-}
-
-export interface User extends Node {
+export interface TimeTag extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  email: String
-  password: String
   name: String
+  description?: String
+  user?: User
+  isGeneral?: Boolean
   timeLogs?: TimeLog[]
-  timeTags?: TimeTag[]
-  role: ROLE_TAG
-}
-
-/*
- * Information about pagination in a connection.
-
- */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
 }
 
 export interface TimeTagSubscriptionPayload {
@@ -2122,17 +2199,6 @@ export interface TimeTagSubscriptionPayload {
   node?: TimeTag
   updatedFields?: String[]
   previousValues?: TimeTagPreviousValues
-}
-
-export interface TimeLogSubscriptionPayload {
-  mutation: MutationType
-  node?: TimeLog
-  updatedFields?: String[]
-  previousValues?: TimeLogPreviousValues
-}
-
-export interface BatchPayload {
-  count: Long
 }
 
 export interface AggregateTimeLog {
@@ -2149,17 +2215,8 @@ export interface TimeLogConnection {
   aggregate: AggregateTimeLog
 }
 
-export interface TimeLog extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  title: String
-  text?: String
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  user: User
-  tags?: TimeTag[]
+export interface BatchPayload {
+  count: Long
 }
 
 /*
@@ -2171,8 +2228,54 @@ export interface TimeTagEdge {
   cursor: String
 }
 
+export interface TimeLogSubscriptionPayload {
+  mutation: MutationType
+  node?: TimeLog
+  updatedFields?: String[]
+  previousValues?: TimeLogPreviousValues
+}
+
 export interface AggregateUser {
   count: Int
+}
+
+export interface TimeLog extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user: User
+  tags?: TimeTag[]
+}
+
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
+}
+
+export interface User extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  name: String
+  timeLogs?: TimeLog[]
+  timeTags?: TimeTag[]
+  role: ROLE_TAG
 }
 
 export interface UserPreviousValues {
@@ -2201,15 +2304,14 @@ export interface TimeTagPreviousValues {
   isGeneral?: Boolean
 }
 
-export interface TimeTag extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  name: String
-  description?: String
-  user?: User
-  isGeneral?: Boolean
-  timeLogs?: TimeLog[]
+/*
+ * A connection to a list of items.
+
+ */
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
 }
 
 /*
@@ -2245,6 +2347,11 @@ export interface TimeLogEdge {
 }
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
@@ -2256,19 +2363,14 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
-
-/*
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 */
 export type Long = string
 
-export type DateTime = Date | string
-
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type String = string
+export type Boolean = boolean
+
+export type DateTime = Date | string

@@ -1,7 +1,7 @@
 {
   "name": "timephile-backend",
   "scripts": {
-    "start": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "start": "docker-compose up -d&&prisma deploy -y&&dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
     "dev": "npm-run-all --parallel start playground",
     "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",

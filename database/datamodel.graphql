@@ -27,9 +27,12 @@ type TimeLog {
   updatedAt: DateTime!
   title: String!
   text: String
+  date: DateTime
+  isRange: Boolean @default(value: "true")
   startTime: DateTime
   endTime: DateTime
   totalTime: Int
+  deleted: Boolean @default(value: "false")
   user: User! @relation(name: "TimeLogsByUser", onDelete: SET_NULL)
   tags: [TimeTag!]! @relation(name: "TimeTags", onDelete: SET_NULL)
 }

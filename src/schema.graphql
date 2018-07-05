@@ -19,9 +19,22 @@ type Mutation {
   createTimeLog(
     title: String!, 
     text: String,
+    date: DateTime,
     startTime: DateTime,
     endTime: DateTime,
+    totalTime: Int,
     tagIds: [ID!]
+  ): TimeLog
+
+  updateTimeLog(
+    id: ID!
+    title: String, 
+    text: String,
+    date: DateTime,
+    startTime: DateTime,
+    deleted: Boolean,
+    endTime: DateTime,
+    totalTime: Int
   ): TimeLog
 
   createTimeTag(
