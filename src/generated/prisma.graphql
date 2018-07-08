@@ -1,5 +1,13 @@
 # source: http://localhost:4466
-# timestamp: Wed Jul 04 2018 21:52:47 GMT-0500 (Central Daylight Time)
+# timestamp: Thu Jul 05 2018 23:03:41 GMT-0500 (Central Daylight Time)
+
+type AggregateConfirmEmail {
+  count: Int!
+}
+
+type AggregateResetPasswordEmail {
+  count: Int!
+}
 
 type AggregateTimeLog {
   count: Int!
@@ -18,6 +26,193 @@ type BatchPayload {
   count: Long!
 }
 
+type ConfirmEmail {
+  userId: ID!
+  link: String!
+}
+
+"""A connection to a list of items."""
+type ConfirmEmailConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ConfirmEmailEdge]!
+  aggregate: AggregateConfirmEmail!
+}
+
+input ConfirmEmailCreateInput {
+  userId: ID!
+  link: String!
+}
+
+"""An edge in a connection."""
+type ConfirmEmailEdge {
+  """The item at the end of the edge."""
+  node: ConfirmEmail!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ConfirmEmailOrderByInput {
+  userId_ASC
+  userId_DESC
+  link_ASC
+  link_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ConfirmEmailPreviousValues {
+  userId: ID!
+  link: String!
+}
+
+type ConfirmEmailSubscriptionPayload {
+  mutation: MutationType!
+  node: ConfirmEmail
+  updatedFields: [String!]
+  previousValues: ConfirmEmailPreviousValues
+}
+
+input ConfirmEmailSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConfirmEmailSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConfirmEmailSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConfirmEmailSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ConfirmEmailWhereInput
+}
+
+input ConfirmEmailUpdateInput {
+  userId: ID
+  link: String
+}
+
+input ConfirmEmailWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConfirmEmailWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConfirmEmailWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConfirmEmailWhereInput!]
+  userId: ID
+
+  """All values that are not equal to given value."""
+  userId_not: ID
+
+  """All values that are contained in given list."""
+  userId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [ID!]
+
+  """All values less than the given value."""
+  userId_lt: ID
+
+  """All values less than or equal the given value."""
+  userId_lte: ID
+
+  """All values greater than the given value."""
+  userId_gt: ID
+
+  """All values greater than or equal the given value."""
+  userId_gte: ID
+
+  """All values containing the given string."""
+  userId_contains: ID
+
+  """All values not containing the given string."""
+  userId_not_contains: ID
+
+  """All values starting with the given string."""
+  userId_starts_with: ID
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  userId_ends_with: ID
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: ID
+  link: String
+
+  """All values that are not equal to given value."""
+  link_not: String
+
+  """All values that are contained in given list."""
+  link_in: [String!]
+
+  """All values that are not contained in given list."""
+  link_not_in: [String!]
+
+  """All values less than the given value."""
+  link_lt: String
+
+  """All values less than or equal the given value."""
+  link_lte: String
+
+  """All values greater than the given value."""
+  link_gt: String
+
+  """All values greater than or equal the given value."""
+  link_gte: String
+
+  """All values containing the given string."""
+  link_contains: String
+
+  """All values not containing the given string."""
+  link_not_contains: String
+
+  """All values starting with the given string."""
+  link_starts_with: String
+
+  """All values not starting with the given string."""
+  link_not_starts_with: String
+
+  """All values ending with the given string."""
+  link_ends_with: String
+
+  """All values not ending with the given string."""
+  link_not_ends_with: String
+}
+
+input ConfirmEmailWhereUniqueInput {
+  userId: ID
+  link: String
+}
+
 scalar DateTime
 
 """
@@ -28,21 +223,33 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createConfirmEmail(data: ConfirmEmailCreateInput!): ConfirmEmail!
+  createResetPasswordEmail(data: ResetPasswordEmailCreateInput!): ResetPasswordEmail!
   createTimeTag(data: TimeTagCreateInput!): TimeTag!
   createTimeLog(data: TimeLogCreateInput!): TimeLog!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateConfirmEmail(data: ConfirmEmailUpdateInput!, where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  updateResetPasswordEmail(data: ResetPasswordEmailUpdateInput!, where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   updateTimeTag(data: TimeTagUpdateInput!, where: TimeTagWhereUniqueInput!): TimeTag
   updateTimeLog(data: TimeLogUpdateInput!, where: TimeLogWhereUniqueInput!): TimeLog
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteConfirmEmail(where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  deleteResetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   deleteTimeTag(where: TimeTagWhereUniqueInput!): TimeTag
   deleteTimeLog(where: TimeLogWhereUniqueInput!): TimeLog
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertConfirmEmail(where: ConfirmEmailWhereUniqueInput!, create: ConfirmEmailCreateInput!, update: ConfirmEmailUpdateInput!): ConfirmEmail!
+  upsertResetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!, create: ResetPasswordEmailCreateInput!, update: ResetPasswordEmailUpdateInput!): ResetPasswordEmail!
   upsertTimeTag(where: TimeTagWhereUniqueInput!, create: TimeTagCreateInput!, update: TimeTagUpdateInput!): TimeTag!
   upsertTimeLog(where: TimeLogWhereUniqueInput!, create: TimeLogCreateInput!, update: TimeLogUpdateInput!): TimeLog!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyConfirmEmails(data: ConfirmEmailUpdateInput!, where: ConfirmEmailWhereInput): BatchPayload!
+  updateManyResetPasswordEmails(data: ResetPasswordEmailUpdateInput!, where: ResetPasswordEmailWhereInput): BatchPayload!
   updateManyTimeTags(data: TimeTagUpdateInput!, where: TimeTagWhereInput): BatchPayload!
   updateManyTimeLogs(data: TimeLogUpdateInput!, where: TimeLogWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyConfirmEmails(where: ConfirmEmailWhereInput): BatchPayload!
+  deleteManyResetPasswordEmails(where: ResetPasswordEmailWhereInput): BatchPayload!
   deleteManyTimeTags(where: TimeTagWhereInput): BatchPayload!
   deleteManyTimeLogs(where: TimeLogWhereInput): BatchPayload!
 }
@@ -76,12 +283,18 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  confirmEmails(where: ConfirmEmailWhereInput, orderBy: ConfirmEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConfirmEmail]!
+  resetPasswordEmails(where: ResetPasswordEmailWhereInput, orderBy: ResetPasswordEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ResetPasswordEmail]!
   timeTags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag]!
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog]!
   user(where: UserWhereUniqueInput!): User
+  confirmEmail(where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  resetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   timeTag(where: TimeTagWhereUniqueInput!): TimeTag
   timeLog(where: TimeLogWhereUniqueInput!): TimeLog
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  confirmEmailsConnection(where: ConfirmEmailWhereInput, orderBy: ConfirmEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConfirmEmailConnection!
+  resetPasswordEmailsConnection(where: ResetPasswordEmailWhereInput, orderBy: ResetPasswordEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResetPasswordEmailConnection!
   timeTagsConnection(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeTagConnection!
   timeLogsConnection(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeLogConnection!
 
@@ -92,6 +305,193 @@ type Query {
   ): Node
 }
 
+type ResetPasswordEmail {
+  userId: ID!
+  link: String!
+}
+
+"""A connection to a list of items."""
+type ResetPasswordEmailConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ResetPasswordEmailEdge]!
+  aggregate: AggregateResetPasswordEmail!
+}
+
+input ResetPasswordEmailCreateInput {
+  userId: ID!
+  link: String!
+}
+
+"""An edge in a connection."""
+type ResetPasswordEmailEdge {
+  """The item at the end of the edge."""
+  node: ResetPasswordEmail!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ResetPasswordEmailOrderByInput {
+  userId_ASC
+  userId_DESC
+  link_ASC
+  link_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ResetPasswordEmailPreviousValues {
+  userId: ID!
+  link: String!
+}
+
+type ResetPasswordEmailSubscriptionPayload {
+  mutation: MutationType!
+  node: ResetPasswordEmail
+  updatedFields: [String!]
+  previousValues: ResetPasswordEmailPreviousValues
+}
+
+input ResetPasswordEmailSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ResetPasswordEmailWhereInput
+}
+
+input ResetPasswordEmailUpdateInput {
+  userId: ID
+  link: String
+}
+
+input ResetPasswordEmailWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResetPasswordEmailWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResetPasswordEmailWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResetPasswordEmailWhereInput!]
+  userId: ID
+
+  """All values that are not equal to given value."""
+  userId_not: ID
+
+  """All values that are contained in given list."""
+  userId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [ID!]
+
+  """All values less than the given value."""
+  userId_lt: ID
+
+  """All values less than or equal the given value."""
+  userId_lte: ID
+
+  """All values greater than the given value."""
+  userId_gt: ID
+
+  """All values greater than or equal the given value."""
+  userId_gte: ID
+
+  """All values containing the given string."""
+  userId_contains: ID
+
+  """All values not containing the given string."""
+  userId_not_contains: ID
+
+  """All values starting with the given string."""
+  userId_starts_with: ID
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  userId_ends_with: ID
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: ID
+  link: String
+
+  """All values that are not equal to given value."""
+  link_not: String
+
+  """All values that are contained in given list."""
+  link_in: [String!]
+
+  """All values that are not contained in given list."""
+  link_not_in: [String!]
+
+  """All values less than the given value."""
+  link_lt: String
+
+  """All values less than or equal the given value."""
+  link_lte: String
+
+  """All values greater than the given value."""
+  link_gt: String
+
+  """All values greater than or equal the given value."""
+  link_gte: String
+
+  """All values containing the given string."""
+  link_contains: String
+
+  """All values not containing the given string."""
+  link_not_contains: String
+
+  """All values starting with the given string."""
+  link_starts_with: String
+
+  """All values not starting with the given string."""
+  link_not_starts_with: String
+
+  """All values ending with the given string."""
+  link_ends_with: String
+
+  """All values not ending with the given string."""
+  link_not_ends_with: String
+}
+
+input ResetPasswordEmailWhereUniqueInput {
+  userId: ID
+  link: String
+}
+
 enum ROLE_TAG {
   ADMIN
   CUSTOMER
@@ -99,6 +499,8 @@ enum ROLE_TAG {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  confirmEmail(where: ConfirmEmailSubscriptionWhereInput): ConfirmEmailSubscriptionPayload
+  resetPasswordEmail(where: ResetPasswordEmailSubscriptionWhereInput): ResetPasswordEmailSubscriptionPayload
   timeTag(where: TimeTagSubscriptionWhereInput): TimeTagSubscriptionPayload
   timeLog(where: TimeLogSubscriptionWhereInput): TimeLogSubscriptionPayload
 }
@@ -625,6 +1027,7 @@ type TimeTag implements Node {
   updatedAt: DateTime!
   name: String!
   description: String
+  color: String!
   user(where: UserWhereInput): User
   isGeneral: Boolean
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
@@ -643,6 +1046,7 @@ type TimeTagConnection {
 input TimeTagCreateInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
   timeLogs: TimeLogCreateManyWithoutTagsInput
@@ -661,6 +1065,7 @@ input TimeTagCreateManyWithoutUserInput {
 input TimeTagCreateWithoutTimeLogsInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
 }
@@ -668,6 +1073,7 @@ input TimeTagCreateWithoutTimeLogsInput {
 input TimeTagCreateWithoutUserInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   timeLogs: TimeLogCreateManyWithoutTagsInput
 }
@@ -692,6 +1098,8 @@ enum TimeTagOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  color_ASC
+  color_DESC
   isGeneral_ASC
   isGeneral_DESC
 }
@@ -702,6 +1110,7 @@ type TimeTagPreviousValues {
   updatedAt: DateTime!
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
 }
 
@@ -747,6 +1156,7 @@ input TimeTagSubscriptionWhereInput {
 input TimeTagUpdateInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
   timeLogs: TimeLogUpdateManyWithoutTagsInput
@@ -773,6 +1183,7 @@ input TimeTagUpdateManyWithoutUserInput {
 input TimeTagUpdateWithoutTimeLogsDataInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
 }
@@ -780,6 +1191,7 @@ input TimeTagUpdateWithoutTimeLogsDataInput {
 input TimeTagUpdateWithoutUserDataInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   timeLogs: TimeLogUpdateManyWithoutTagsInput
 }
@@ -979,6 +1391,46 @@ input TimeTagWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  color: String
+
+  """All values that are not equal to given value."""
+  color_not: String
+
+  """All values that are contained in given list."""
+  color_in: [String!]
+
+  """All values that are not contained in given list."""
+  color_not_in: [String!]
+
+  """All values less than the given value."""
+  color_lt: String
+
+  """All values less than or equal the given value."""
+  color_lte: String
+
+  """All values greater than the given value."""
+  color_gt: String
+
+  """All values greater than or equal the given value."""
+  color_gte: String
+
+  """All values containing the given string."""
+  color_contains: String
+
+  """All values not containing the given string."""
+  color_not_contains: String
+
+  """All values starting with the given string."""
+  color_starts_with: String
+
+  """All values not starting with the given string."""
+  color_not_starts_with: String
+
+  """All values ending with the given string."""
+  color_ends_with: String
+
+  """All values not ending with the given string."""
+  color_not_ends_with: String
   isGeneral: Boolean
 
   """All values that are not equal to given value."""
@@ -1003,6 +1455,8 @@ type User implements Node {
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
   timeTags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag!]
   role: ROLE_TAG!
+  confirmedEmail: Boolean!
+  resetPasswordEmail: Boolean!
 }
 
 """A connection to a list of items."""
@@ -1020,6 +1474,8 @@ input UserCreateInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogCreateManyWithoutUserInput
   timeTags: TimeTagCreateManyWithoutUserInput
 }
@@ -1039,6 +1495,8 @@ input UserCreateWithoutTimeLogsInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeTags: TimeTagCreateManyWithoutUserInput
 }
 
@@ -1047,6 +1505,8 @@ input UserCreateWithoutTimeTagsInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogCreateManyWithoutUserInput
 }
 
@@ -1074,6 +1534,10 @@ enum UserOrderByInput {
   name_DESC
   role_ASC
   role_DESC
+  confirmedEmail_ASC
+  confirmedEmail_DESC
+  resetPasswordEmail_ASC
+  resetPasswordEmail_DESC
 }
 
 type UserPreviousValues {
@@ -1084,6 +1548,8 @@ type UserPreviousValues {
   password: String!
   name: String!
   role: ROLE_TAG!
+  confirmedEmail: Boolean!
+  resetPasswordEmail: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -1130,6 +1596,8 @@ input UserUpdateInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogUpdateManyWithoutUserInput
   timeTags: TimeTagUpdateManyWithoutUserInput
 }
@@ -1156,6 +1624,8 @@ input UserUpdateWithoutTimeLogsDataInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeTags: TimeTagUpdateManyWithoutUserInput
 }
 
@@ -1164,6 +1634,8 @@ input UserUpdateWithoutTimeTagsDataInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogUpdateManyWithoutUserInput
 }
 
@@ -1400,6 +1872,14 @@ input UserWhereInput {
 
   """All values that are not contained in given list."""
   role_not_in: [ROLE_TAG!]
+  confirmedEmail: Boolean
+
+  """All values that are not equal to given value."""
+  confirmedEmail_not: Boolean
+  resetPasswordEmail: Boolean
+
+  """All values that are not equal to given value."""
+  resetPasswordEmail_not: Boolean
   timeLogs_every: TimeLogWhereInput
   timeLogs_some: TimeLogWhereInput
   timeLogs_none: TimeLogWhereInput

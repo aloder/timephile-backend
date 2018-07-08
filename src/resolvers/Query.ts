@@ -13,7 +13,7 @@ export const Query = {
                 id: userId 
             },
             date_gte: startDate,
-            date_lte: endDate
+            date_lt: endDate
         }
       },
       info);  

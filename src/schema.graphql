@@ -26,6 +26,12 @@ type Mutation {
     tagIds: [ID!]
   ): TimeLog
 
+  createForgotPassword(email: String):Boolean
+
+  verifyEmail(link: String!): Boolean
+
+  resendVerifyEmail(email: String):Boolean
+
   updateTimeLog(
     id: ID!
     title: String, 
@@ -34,11 +40,14 @@ type Mutation {
     startTime: DateTime,
     deleted: Boolean,
     endTime: DateTime,
-    totalTime: Int
+    totalTime: Int,
+    addTagIds: [ID!]!,
+    removeTagIds: [ID!]!
   ): TimeLog
 
   createTimeTag(
     name: String!
+    color: String!
     description: String!
   ):TimeTag
 }

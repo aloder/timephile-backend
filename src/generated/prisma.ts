@@ -5,12 +5,18 @@ import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
     users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    confirmEmails: <T = ConfirmEmail[]>(args: { where?: ConfirmEmailWhereInput, orderBy?: ConfirmEmailOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    resetPasswordEmails: <T = ResetPasswordEmail[]>(args: { where?: ResetPasswordEmailWhereInput, orderBy?: ResetPasswordEmailOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeTags: <T = TimeTag[]>(args: { where?: TimeTagWhereInput, orderBy?: TimeTagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeLogs: <T = TimeLog[]>(args: { where?: TimeLogWhereInput, orderBy?: TimeLogOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    confirmEmail: <T = ConfirmEmail | null>(args: { where: ConfirmEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    resetPasswordEmail: <T = ResetPasswordEmail | null>(args: { where: ResetPasswordEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeTag: <T = TimeTag | null>(args: { where: TimeTagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeLog: <T = TimeLog | null>(args: { where: TimeLogWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    confirmEmailsConnection: <T = ConfirmEmailConnection>(args: { where?: ConfirmEmailWhereInput, orderBy?: ConfirmEmailOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    resetPasswordEmailsConnection: <T = ResetPasswordEmailConnection>(args: { where?: ResetPasswordEmailWhereInput, orderBy?: ResetPasswordEmailOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeTagsConnection: <T = TimeTagConnection>(args: { where?: TimeTagWhereInput, orderBy?: TimeTagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     timeLogsConnection: <T = TimeLogConnection>(args: { where?: TimeLogWhereInput, orderBy?: TimeLogOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
@@ -18,33 +24,49 @@ export interface Query {
 
 export interface Mutation {
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createConfirmEmail: <T = ConfirmEmail>(args: { data: ConfirmEmailCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createResetPasswordEmail: <T = ResetPasswordEmail>(args: { data: ResetPasswordEmailCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createTimeTag: <T = TimeTag>(args: { data: TimeTagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createTimeLog: <T = TimeLog>(args: { data: TimeLogCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateConfirmEmail: <T = ConfirmEmail | null>(args: { data: ConfirmEmailUpdateInput, where: ConfirmEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateResetPasswordEmail: <T = ResetPasswordEmail | null>(args: { data: ResetPasswordEmailUpdateInput, where: ResetPasswordEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateTimeTag: <T = TimeTag | null>(args: { data: TimeTagUpdateInput, where: TimeTagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateTimeLog: <T = TimeLog | null>(args: { data: TimeLogUpdateInput, where: TimeLogWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteConfirmEmail: <T = ConfirmEmail | null>(args: { where: ConfirmEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteResetPasswordEmail: <T = ResetPasswordEmail | null>(args: { where: ResetPasswordEmailWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteTimeTag: <T = TimeTag | null>(args: { where: TimeTagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteTimeLog: <T = TimeLog | null>(args: { where: TimeLogWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertConfirmEmail: <T = ConfirmEmail>(args: { where: ConfirmEmailWhereUniqueInput, create: ConfirmEmailCreateInput, update: ConfirmEmailUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertResetPasswordEmail: <T = ResetPasswordEmail>(args: { where: ResetPasswordEmailWhereUniqueInput, create: ResetPasswordEmailCreateInput, update: ResetPasswordEmailUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertTimeTag: <T = TimeTag>(args: { where: TimeTagWhereUniqueInput, create: TimeTagCreateInput, update: TimeTagUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertTimeLog: <T = TimeLog>(args: { where: TimeLogWhereUniqueInput, create: TimeLogCreateInput, update: TimeLogUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyConfirmEmails: <T = BatchPayload>(args: { data: ConfirmEmailUpdateInput, where?: ConfirmEmailWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyResetPasswordEmails: <T = BatchPayload>(args: { data: ResetPasswordEmailUpdateInput, where?: ResetPasswordEmailWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyTimeTags: <T = BatchPayload>(args: { data: TimeTagUpdateInput, where?: TimeTagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyTimeLogs: <T = BatchPayload>(args: { data: TimeLogUpdateInput, where?: TimeLogWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyConfirmEmails: <T = BatchPayload>(args: { where?: ConfirmEmailWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyResetPasswordEmails: <T = BatchPayload>(args: { where?: ResetPasswordEmailWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyTimeTags: <T = BatchPayload>(args: { where?: TimeTagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyTimeLogs: <T = BatchPayload>(args: { where?: TimeLogWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {
     user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    confirmEmail: <T = ConfirmEmailSubscriptionPayload | null>(args: { where?: ConfirmEmailSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    resetPasswordEmail: <T = ResetPasswordEmailSubscriptionPayload | null>(args: { where?: ResetPasswordEmailSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     timeTag: <T = TimeTagSubscriptionPayload | null>(args: { where?: TimeTagSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     timeLog: <T = TimeLogSubscriptionPayload | null>(args: { where?: TimeLogSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
   User: (where?: UserWhereInput) => Promise<boolean>
+  ConfirmEmail: (where?: ConfirmEmailWhereInput) => Promise<boolean>
+  ResetPasswordEmail: (where?: ResetPasswordEmailWhereInput) => Promise<boolean>
   TimeTag: (where?: TimeTagWhereInput) => Promise<boolean>
   TimeLog: (where?: TimeLogWhereInput) => Promise<boolean>
 }
@@ -71,7 +93,15 @@ export interface BindingConstructor<T> {
  * Type Defs
 */
 
-const typeDefs = `type AggregateTimeLog {
+const typeDefs = `type AggregateConfirmEmail {
+  count: Int!
+}
+
+type AggregateResetPasswordEmail {
+  count: Int!
+}
+
+type AggregateTimeLog {
   count: Int!
 }
 
@@ -88,6 +118,193 @@ type BatchPayload {
   count: Long!
 }
 
+type ConfirmEmail {
+  userId: ID!
+  link: String!
+}
+
+"""A connection to a list of items."""
+type ConfirmEmailConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ConfirmEmailEdge]!
+  aggregate: AggregateConfirmEmail!
+}
+
+input ConfirmEmailCreateInput {
+  userId: ID!
+  link: String!
+}
+
+"""An edge in a connection."""
+type ConfirmEmailEdge {
+  """The item at the end of the edge."""
+  node: ConfirmEmail!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ConfirmEmailOrderByInput {
+  userId_ASC
+  userId_DESC
+  link_ASC
+  link_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ConfirmEmailPreviousValues {
+  userId: ID!
+  link: String!
+}
+
+type ConfirmEmailSubscriptionPayload {
+  mutation: MutationType!
+  node: ConfirmEmail
+  updatedFields: [String!]
+  previousValues: ConfirmEmailPreviousValues
+}
+
+input ConfirmEmailSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConfirmEmailSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConfirmEmailSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConfirmEmailSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ConfirmEmailWhereInput
+}
+
+input ConfirmEmailUpdateInput {
+  userId: ID
+  link: String
+}
+
+input ConfirmEmailWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConfirmEmailWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConfirmEmailWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConfirmEmailWhereInput!]
+  userId: ID
+
+  """All values that are not equal to given value."""
+  userId_not: ID
+
+  """All values that are contained in given list."""
+  userId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [ID!]
+
+  """All values less than the given value."""
+  userId_lt: ID
+
+  """All values less than or equal the given value."""
+  userId_lte: ID
+
+  """All values greater than the given value."""
+  userId_gt: ID
+
+  """All values greater than or equal the given value."""
+  userId_gte: ID
+
+  """All values containing the given string."""
+  userId_contains: ID
+
+  """All values not containing the given string."""
+  userId_not_contains: ID
+
+  """All values starting with the given string."""
+  userId_starts_with: ID
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  userId_ends_with: ID
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: ID
+  link: String
+
+  """All values that are not equal to given value."""
+  link_not: String
+
+  """All values that are contained in given list."""
+  link_in: [String!]
+
+  """All values that are not contained in given list."""
+  link_not_in: [String!]
+
+  """All values less than the given value."""
+  link_lt: String
+
+  """All values less than or equal the given value."""
+  link_lte: String
+
+  """All values greater than the given value."""
+  link_gt: String
+
+  """All values greater than or equal the given value."""
+  link_gte: String
+
+  """All values containing the given string."""
+  link_contains: String
+
+  """All values not containing the given string."""
+  link_not_contains: String
+
+  """All values starting with the given string."""
+  link_starts_with: String
+
+  """All values not starting with the given string."""
+  link_not_starts_with: String
+
+  """All values ending with the given string."""
+  link_ends_with: String
+
+  """All values not ending with the given string."""
+  link_not_ends_with: String
+}
+
+input ConfirmEmailWhereUniqueInput {
+  userId: ID
+  link: String
+}
+
 scalar DateTime
 
 """
@@ -98,21 +315,33 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createConfirmEmail(data: ConfirmEmailCreateInput!): ConfirmEmail!
+  createResetPasswordEmail(data: ResetPasswordEmailCreateInput!): ResetPasswordEmail!
   createTimeTag(data: TimeTagCreateInput!): TimeTag!
   createTimeLog(data: TimeLogCreateInput!): TimeLog!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateConfirmEmail(data: ConfirmEmailUpdateInput!, where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  updateResetPasswordEmail(data: ResetPasswordEmailUpdateInput!, where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   updateTimeTag(data: TimeTagUpdateInput!, where: TimeTagWhereUniqueInput!): TimeTag
   updateTimeLog(data: TimeLogUpdateInput!, where: TimeLogWhereUniqueInput!): TimeLog
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteConfirmEmail(where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  deleteResetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   deleteTimeTag(where: TimeTagWhereUniqueInput!): TimeTag
   deleteTimeLog(where: TimeLogWhereUniqueInput!): TimeLog
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertConfirmEmail(where: ConfirmEmailWhereUniqueInput!, create: ConfirmEmailCreateInput!, update: ConfirmEmailUpdateInput!): ConfirmEmail!
+  upsertResetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!, create: ResetPasswordEmailCreateInput!, update: ResetPasswordEmailUpdateInput!): ResetPasswordEmail!
   upsertTimeTag(where: TimeTagWhereUniqueInput!, create: TimeTagCreateInput!, update: TimeTagUpdateInput!): TimeTag!
   upsertTimeLog(where: TimeLogWhereUniqueInput!, create: TimeLogCreateInput!, update: TimeLogUpdateInput!): TimeLog!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyConfirmEmails(data: ConfirmEmailUpdateInput!, where: ConfirmEmailWhereInput): BatchPayload!
+  updateManyResetPasswordEmails(data: ResetPasswordEmailUpdateInput!, where: ResetPasswordEmailWhereInput): BatchPayload!
   updateManyTimeTags(data: TimeTagUpdateInput!, where: TimeTagWhereInput): BatchPayload!
   updateManyTimeLogs(data: TimeLogUpdateInput!, where: TimeLogWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyConfirmEmails(where: ConfirmEmailWhereInput): BatchPayload!
+  deleteManyResetPasswordEmails(where: ResetPasswordEmailWhereInput): BatchPayload!
   deleteManyTimeTags(where: TimeTagWhereInput): BatchPayload!
   deleteManyTimeLogs(where: TimeLogWhereInput): BatchPayload!
 }
@@ -146,12 +375,18 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  confirmEmails(where: ConfirmEmailWhereInput, orderBy: ConfirmEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConfirmEmail]!
+  resetPasswordEmails(where: ResetPasswordEmailWhereInput, orderBy: ResetPasswordEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ResetPasswordEmail]!
   timeTags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag]!
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog]!
   user(where: UserWhereUniqueInput!): User
+  confirmEmail(where: ConfirmEmailWhereUniqueInput!): ConfirmEmail
+  resetPasswordEmail(where: ResetPasswordEmailWhereUniqueInput!): ResetPasswordEmail
   timeTag(where: TimeTagWhereUniqueInput!): TimeTag
   timeLog(where: TimeLogWhereUniqueInput!): TimeLog
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  confirmEmailsConnection(where: ConfirmEmailWhereInput, orderBy: ConfirmEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConfirmEmailConnection!
+  resetPasswordEmailsConnection(where: ResetPasswordEmailWhereInput, orderBy: ResetPasswordEmailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResetPasswordEmailConnection!
   timeTagsConnection(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeTagConnection!
   timeLogsConnection(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeLogConnection!
 
@@ -162,6 +397,193 @@ type Query {
   ): Node
 }
 
+type ResetPasswordEmail {
+  userId: ID!
+  link: String!
+}
+
+"""A connection to a list of items."""
+type ResetPasswordEmailConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ResetPasswordEmailEdge]!
+  aggregate: AggregateResetPasswordEmail!
+}
+
+input ResetPasswordEmailCreateInput {
+  userId: ID!
+  link: String!
+}
+
+"""An edge in a connection."""
+type ResetPasswordEmailEdge {
+  """The item at the end of the edge."""
+  node: ResetPasswordEmail!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ResetPasswordEmailOrderByInput {
+  userId_ASC
+  userId_DESC
+  link_ASC
+  link_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ResetPasswordEmailPreviousValues {
+  userId: ID!
+  link: String!
+}
+
+type ResetPasswordEmailSubscriptionPayload {
+  mutation: MutationType!
+  node: ResetPasswordEmail
+  updatedFields: [String!]
+  previousValues: ResetPasswordEmailPreviousValues
+}
+
+input ResetPasswordEmailSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResetPasswordEmailSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ResetPasswordEmailWhereInput
+}
+
+input ResetPasswordEmailUpdateInput {
+  userId: ID
+  link: String
+}
+
+input ResetPasswordEmailWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResetPasswordEmailWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResetPasswordEmailWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResetPasswordEmailWhereInput!]
+  userId: ID
+
+  """All values that are not equal to given value."""
+  userId_not: ID
+
+  """All values that are contained in given list."""
+  userId_in: [ID!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [ID!]
+
+  """All values less than the given value."""
+  userId_lt: ID
+
+  """All values less than or equal the given value."""
+  userId_lte: ID
+
+  """All values greater than the given value."""
+  userId_gt: ID
+
+  """All values greater than or equal the given value."""
+  userId_gte: ID
+
+  """All values containing the given string."""
+  userId_contains: ID
+
+  """All values not containing the given string."""
+  userId_not_contains: ID
+
+  """All values starting with the given string."""
+  userId_starts_with: ID
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: ID
+
+  """All values ending with the given string."""
+  userId_ends_with: ID
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: ID
+  link: String
+
+  """All values that are not equal to given value."""
+  link_not: String
+
+  """All values that are contained in given list."""
+  link_in: [String!]
+
+  """All values that are not contained in given list."""
+  link_not_in: [String!]
+
+  """All values less than the given value."""
+  link_lt: String
+
+  """All values less than or equal the given value."""
+  link_lte: String
+
+  """All values greater than the given value."""
+  link_gt: String
+
+  """All values greater than or equal the given value."""
+  link_gte: String
+
+  """All values containing the given string."""
+  link_contains: String
+
+  """All values not containing the given string."""
+  link_not_contains: String
+
+  """All values starting with the given string."""
+  link_starts_with: String
+
+  """All values not starting with the given string."""
+  link_not_starts_with: String
+
+  """All values ending with the given string."""
+  link_ends_with: String
+
+  """All values not ending with the given string."""
+  link_not_ends_with: String
+}
+
+input ResetPasswordEmailWhereUniqueInput {
+  userId: ID
+  link: String
+}
+
 enum ROLE_TAG {
   ADMIN
   CUSTOMER
@@ -169,6 +591,8 @@ enum ROLE_TAG {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  confirmEmail(where: ConfirmEmailSubscriptionWhereInput): ConfirmEmailSubscriptionPayload
+  resetPasswordEmail(where: ResetPasswordEmailSubscriptionWhereInput): ResetPasswordEmailSubscriptionPayload
   timeTag(where: TimeTagSubscriptionWhereInput): TimeTagSubscriptionPayload
   timeLog(where: TimeLogSubscriptionWhereInput): TimeLogSubscriptionPayload
 }
@@ -695,6 +1119,7 @@ type TimeTag implements Node {
   updatedAt: DateTime!
   name: String!
   description: String
+  color: String!
   user(where: UserWhereInput): User
   isGeneral: Boolean
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
@@ -713,6 +1138,7 @@ type TimeTagConnection {
 input TimeTagCreateInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
   timeLogs: TimeLogCreateManyWithoutTagsInput
@@ -731,6 +1157,7 @@ input TimeTagCreateManyWithoutUserInput {
 input TimeTagCreateWithoutTimeLogsInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
 }
@@ -738,6 +1165,7 @@ input TimeTagCreateWithoutTimeLogsInput {
 input TimeTagCreateWithoutUserInput {
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
   timeLogs: TimeLogCreateManyWithoutTagsInput
 }
@@ -762,6 +1190,8 @@ enum TimeTagOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  color_ASC
+  color_DESC
   isGeneral_ASC
   isGeneral_DESC
 }
@@ -772,6 +1202,7 @@ type TimeTagPreviousValues {
   updatedAt: DateTime!
   name: String!
   description: String
+  color: String!
   isGeneral: Boolean
 }
 
@@ -817,6 +1248,7 @@ input TimeTagSubscriptionWhereInput {
 input TimeTagUpdateInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
   timeLogs: TimeLogUpdateManyWithoutTagsInput
@@ -843,6 +1275,7 @@ input TimeTagUpdateManyWithoutUserInput {
 input TimeTagUpdateWithoutTimeLogsDataInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
 }
@@ -850,6 +1283,7 @@ input TimeTagUpdateWithoutTimeLogsDataInput {
 input TimeTagUpdateWithoutUserDataInput {
   name: String
   description: String
+  color: String
   isGeneral: Boolean
   timeLogs: TimeLogUpdateManyWithoutTagsInput
 }
@@ -1049,6 +1483,46 @@ input TimeTagWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  color: String
+
+  """All values that are not equal to given value."""
+  color_not: String
+
+  """All values that are contained in given list."""
+  color_in: [String!]
+
+  """All values that are not contained in given list."""
+  color_not_in: [String!]
+
+  """All values less than the given value."""
+  color_lt: String
+
+  """All values less than or equal the given value."""
+  color_lte: String
+
+  """All values greater than the given value."""
+  color_gt: String
+
+  """All values greater than or equal the given value."""
+  color_gte: String
+
+  """All values containing the given string."""
+  color_contains: String
+
+  """All values not containing the given string."""
+  color_not_contains: String
+
+  """All values starting with the given string."""
+  color_starts_with: String
+
+  """All values not starting with the given string."""
+  color_not_starts_with: String
+
+  """All values ending with the given string."""
+  color_ends_with: String
+
+  """All values not ending with the given string."""
+  color_not_ends_with: String
   isGeneral: Boolean
 
   """All values that are not equal to given value."""
@@ -1073,6 +1547,8 @@ type User implements Node {
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
   timeTags(where: TimeTagWhereInput, orderBy: TimeTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeTag!]
   role: ROLE_TAG!
+  confirmedEmail: Boolean!
+  resetPasswordEmail: Boolean!
 }
 
 """A connection to a list of items."""
@@ -1090,6 +1566,8 @@ input UserCreateInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogCreateManyWithoutUserInput
   timeTags: TimeTagCreateManyWithoutUserInput
 }
@@ -1109,6 +1587,8 @@ input UserCreateWithoutTimeLogsInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeTags: TimeTagCreateManyWithoutUserInput
 }
 
@@ -1117,6 +1597,8 @@ input UserCreateWithoutTimeTagsInput {
   password: String!
   name: String!
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogCreateManyWithoutUserInput
 }
 
@@ -1144,6 +1626,10 @@ enum UserOrderByInput {
   name_DESC
   role_ASC
   role_DESC
+  confirmedEmail_ASC
+  confirmedEmail_DESC
+  resetPasswordEmail_ASC
+  resetPasswordEmail_DESC
 }
 
 type UserPreviousValues {
@@ -1154,6 +1640,8 @@ type UserPreviousValues {
   password: String!
   name: String!
   role: ROLE_TAG!
+  confirmedEmail: Boolean!
+  resetPasswordEmail: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -1200,6 +1688,8 @@ input UserUpdateInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogUpdateManyWithoutUserInput
   timeTags: TimeTagUpdateManyWithoutUserInput
 }
@@ -1226,6 +1716,8 @@ input UserUpdateWithoutTimeLogsDataInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeTags: TimeTagUpdateManyWithoutUserInput
 }
 
@@ -1234,6 +1726,8 @@ input UserUpdateWithoutTimeTagsDataInput {
   password: String
   name: String
   role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
   timeLogs: TimeLogUpdateManyWithoutUserInput
 }
 
@@ -1470,6 +1964,14 @@ input UserWhereInput {
 
   """All values that are not contained in given list."""
   role_not_in: [ROLE_TAG!]
+  confirmedEmail: Boolean
+
+  """All values that are not equal to given value."""
+  confirmedEmail_not: Boolean
+  resetPasswordEmail: Boolean
+
+  """All values that are not equal to given value."""
+  resetPasswordEmail_not: Boolean
   timeLogs_every: TimeLogWhereInput
   timeLogs_some: TimeLogWhereInput
   timeLogs_none: TimeLogWhereInput
@@ -1503,7 +2005,11 @@ export type UserOrderByInput =   'id_ASC' |
   'name_ASC' |
   'name_DESC' |
   'role_ASC' |
-  'role_DESC'
+  'role_DESC' |
+  'confirmedEmail_ASC' |
+  'confirmedEmail_DESC' |
+  'resetPasswordEmail_ASC' |
+  'resetPasswordEmail_DESC'
 
 export type TimeLogOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1528,9 +2034,6 @@ export type TimeLogOrderByInput =   'id_ASC' |
   'deleted_ASC' |
   'deleted_DESC'
 
-export type ROLE_TAG =   'ADMIN' |
-  'CUSTOMER'
-
 export type TimeTagOrderByInput =   'id_ASC' |
   'id_DESC' |
   'createdAt_ASC' |
@@ -1541,16 +2044,43 @@ export type TimeTagOrderByInput =   'id_ASC' |
   'name_DESC' |
   'description_ASC' |
   'description_DESC' |
+  'color_ASC' |
+  'color_DESC' |
   'isGeneral_ASC' |
   'isGeneral_DESC'
+
+export type ConfirmEmailOrderByInput =   'userId_ASC' |
+  'userId_DESC' |
+  'link_ASC' |
+  'link_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type ROLE_TAG =   'ADMIN' |
+  'CUSTOMER'
+
+export type ResetPasswordEmailOrderByInput =   'userId_ASC' |
+  'userId_DESC' |
+  'link_ASC' |
+  'link_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
 
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface UserCreateOneWithoutTimeLogsInput {
-  create?: UserCreateWithoutTimeLogsInput
-  connect?: UserWhereUniqueInput
+export interface TimeLogCreateManyWithoutTagsInput {
+  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
 }
 
 export interface UserWhereInput {
@@ -1633,6 +2163,10 @@ export interface UserWhereInput {
   role_not?: ROLE_TAG
   role_in?: ROLE_TAG[] | ROLE_TAG
   role_not_in?: ROLE_TAG[] | ROLE_TAG
+  confirmedEmail?: Boolean
+  confirmedEmail_not?: Boolean
+  resetPasswordEmail?: Boolean
+  resetPasswordEmail_not?: Boolean
   timeLogs_every?: TimeLogWhereInput
   timeLogs_some?: TimeLogWhereInput
   timeLogs_none?: TimeLogWhereInput
@@ -1641,55 +2175,130 @@ export interface UserWhereInput {
   timeTags_none?: TimeTagWhereInput
 }
 
-export interface TimeTagCreateManyWithoutTimeLogsInput {
-  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
+export interface ResetPasswordEmailCreateInput {
+  userId: ID_Input
+  link: String
+}
+
+export interface TimeTagWhereInput {
+  AND?: TimeTagWhereInput[] | TimeTagWhereInput
+  OR?: TimeTagWhereInput[] | TimeTagWhereInput
+  NOT?: TimeTagWhereInput[] | TimeTagWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
+  color?: String
+  color_not?: String
+  color_in?: String[] | String
+  color_not_in?: String[] | String
+  color_lt?: String
+  color_lte?: String
+  color_gt?: String
+  color_gte?: String
+  color_contains?: String
+  color_not_contains?: String
+  color_starts_with?: String
+  color_not_starts_with?: String
+  color_ends_with?: String
+  color_not_ends_with?: String
+  isGeneral?: Boolean
+  isGeneral_not?: Boolean
+  user?: UserWhereInput
+  timeLogs_every?: TimeLogWhereInput
+  timeLogs_some?: TimeLogWhereInput
+  timeLogs_none?: TimeLogWhereInput
+}
+
+export interface TimeTagUpdateWithWhereUniqueWithoutUserInput {
+  where: TimeTagWhereUniqueInput
+  data: TimeTagUpdateWithoutUserDataInput
+}
+
+export interface TimeTagUpdateWithoutTimeLogsDataInput {
+  name?: String
+  description?: String
+  color?: String
+  isGeneral?: Boolean
+  user?: UserUpdateOneWithoutTimeTagsInput
+}
+
+export interface TimeTagUpdateManyWithoutUserInput {
+  create?: TimeTagCreateWithoutUserInput[] | TimeTagCreateWithoutUserInput
   connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  disconnect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  delete?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  update?: TimeTagUpdateWithWhereUniqueWithoutUserInput[] | TimeTagUpdateWithWhereUniqueWithoutUserInput
+  upsert?: TimeTagUpsertWithWhereUniqueWithoutUserInput[] | TimeTagUpsertWithWhereUniqueWithoutUserInput
+}
+
+export interface TimeTagCreateInput {
+  name: String
+  description?: String
+  color: String
+  isGeneral?: Boolean
+  user?: UserCreateOneWithoutTimeTagsInput
+  timeLogs?: TimeLogCreateManyWithoutTagsInput
 }
 
 export interface TimeLogUpsertWithWhereUniqueWithoutUserInput {
   where: TimeLogWhereUniqueInput
   update: TimeLogUpdateWithoutUserDataInput
   create: TimeLogCreateWithoutUserInput
-}
-
-export interface TimeTagCreateWithoutTimeLogsInput {
-  name: String
-  description?: String
-  isGeneral?: Boolean
-  user?: UserCreateOneWithoutTimeTagsInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  name?: String
-  role?: ROLE_TAG
-  timeLogs?: TimeLogUpdateManyWithoutUserInput
-  timeTags?: TimeTagUpdateManyWithoutUserInput
-}
-
-export interface UserCreateOneWithoutTimeTagsInput {
-  create?: UserCreateWithoutTimeTagsInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface TimeTagSubscriptionWhereInput {
-  AND?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  OR?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  NOT?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: TimeTagWhereInput
-}
-
-export interface UserCreateWithoutTimeTagsInput {
-  email: String
-  password: String
-  name: String
-  role?: ROLE_TAG
-  timeLogs?: TimeLogCreateManyWithoutUserInput
 }
 
 export interface TimeLogWhereInput {
@@ -1796,13 +2405,86 @@ export interface TimeLogWhereInput {
   tags_none?: TimeTagWhereInput
 }
 
-export interface TimeTagCreateManyWithoutUserInput {
-  create?: TimeTagCreateWithoutUserInput[] | TimeTagCreateWithoutUserInput
-  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+export interface TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput {
+  where: TimeTagWhereUniqueInput
+  update: TimeTagUpdateWithoutTimeLogsDataInput
+  create: TimeTagCreateWithoutTimeLogsInput
 }
 
-export interface TimeLogUpdateInput {
-  title?: String
+export interface ConfirmEmailWhereInput {
+  AND?: ConfirmEmailWhereInput[] | ConfirmEmailWhereInput
+  OR?: ConfirmEmailWhereInput[] | ConfirmEmailWhereInput
+  NOT?: ConfirmEmailWhereInput[] | ConfirmEmailWhereInput
+  userId?: ID_Input
+  userId_not?: ID_Input
+  userId_in?: ID_Input[] | ID_Input
+  userId_not_in?: ID_Input[] | ID_Input
+  userId_lt?: ID_Input
+  userId_lte?: ID_Input
+  userId_gt?: ID_Input
+  userId_gte?: ID_Input
+  userId_contains?: ID_Input
+  userId_not_contains?: ID_Input
+  userId_starts_with?: ID_Input
+  userId_not_starts_with?: ID_Input
+  userId_ends_with?: ID_Input
+  userId_not_ends_with?: ID_Input
+  link?: String
+  link_not?: String
+  link_in?: String[] | String
+  link_not_in?: String[] | String
+  link_lt?: String
+  link_lte?: String
+  link_gt?: String
+  link_gte?: String
+  link_contains?: String
+  link_not_contains?: String
+  link_starts_with?: String
+  link_not_starts_with?: String
+  link_ends_with?: String
+  link_not_ends_with?: String
+}
+
+export interface UserCreateInput {
+  email: String
+  password: String
+  name: String
+  role?: ROLE_TAG
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
+  timeLogs?: TimeLogCreateManyWithoutUserInput
+  timeTags?: TimeTagCreateManyWithoutUserInput
+}
+
+export interface ConfirmEmailSubscriptionWhereInput {
+  AND?: ConfirmEmailSubscriptionWhereInput[] | ConfirmEmailSubscriptionWhereInput
+  OR?: ConfirmEmailSubscriptionWhereInput[] | ConfirmEmailSubscriptionWhereInput
+  NOT?: ConfirmEmailSubscriptionWhereInput[] | ConfirmEmailSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ConfirmEmailWhereInput
+}
+
+export interface TimeLogCreateManyWithoutUserInput {
+  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface TimeLogCreateWithoutUserInput {
+  title: String
   text?: String
   date?: DateTime
   isRange?: Boolean
@@ -1810,15 +2492,7 @@ export interface TimeLogUpdateInput {
   endTime?: DateTime
   totalTime?: Int
   deleted?: Boolean
-  user?: UserUpdateOneWithoutTimeLogsInput
-  tags?: TimeTagUpdateManyWithoutTimeLogsInput
-}
-
-export interface TimeTagCreateWithoutUserInput {
-  name: String
-  description?: String
-  isGeneral?: Boolean
-  timeLogs?: TimeLogCreateManyWithoutTagsInput
+  tags?: TimeTagCreateManyWithoutTimeLogsInput
 }
 
 export interface UserWhereUniqueInput {
@@ -1826,13 +2500,88 @@ export interface UserWhereUniqueInput {
   email?: String
 }
 
-export interface TimeLogCreateManyWithoutTagsInput {
-  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+export interface TimeTagCreateManyWithoutTimeLogsInput {
+  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
+  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+}
+
+export interface ResetPasswordEmailWhereUniqueInput {
+  userId?: ID_Input
+  link?: String
+}
+
+export interface TimeTagCreateWithoutTimeLogsInput {
+  name: String
+  description?: String
+  color: String
+  isGeneral?: Boolean
+  user?: UserCreateOneWithoutTimeTagsInput
 }
 
 export interface TimeLogWhereUniqueInput {
   id?: ID_Input
+}
+
+export interface UserCreateOneWithoutTimeTagsInput {
+  create?: UserCreateWithoutTimeTagsInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface ResetPasswordEmailUpdateInput {
+  userId?: ID_Input
+  link?: String
+}
+
+export interface UserCreateWithoutTimeTagsInput {
+  email: String
+  password: String
+  name: String
+  role?: ROLE_TAG
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
+  timeLogs?: TimeLogCreateManyWithoutUserInput
+}
+
+export interface TimeTagUpsertWithWhereUniqueWithoutUserInput {
+  where: TimeTagWhereUniqueInput
+  update: TimeTagUpdateWithoutUserDataInput
+  create: TimeTagCreateWithoutUserInput
+}
+
+export interface TimeTagCreateManyWithoutUserInput {
+  create?: TimeTagCreateWithoutUserInput[] | TimeTagCreateWithoutUserInput
+  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+}
+
+export interface UserUpsertWithoutTimeLogsInput {
+  update: UserUpdateWithoutTimeLogsDataInput
+  create: UserCreateWithoutTimeLogsInput
+}
+
+export interface TimeTagCreateWithoutUserInput {
+  name: String
+  description?: String
+  color: String
+  isGeneral?: Boolean
+  timeLogs?: TimeLogCreateManyWithoutTagsInput
+}
+
+export interface UserUpdateOneWithoutTimeLogsInput {
+  create?: UserCreateWithoutTimeLogsInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateWithoutTimeLogsDataInput
+  upsert?: UserUpsertWithoutTimeLogsInput
+}
+
+export interface UserUpsertWithoutTimeTagsInput {
+  update: UserUpdateWithoutTimeTagsDataInput
+  create: UserCreateWithoutTimeTagsInput
+}
+
+export interface TimeLogUpdateWithWhereUniqueWithoutTagsInput {
+  where: TimeLogWhereUniqueInput
+  data: TimeLogUpdateWithoutTagsDataInput
 }
 
 export interface TimeLogCreateWithoutTagsInput {
@@ -1847,27 +2596,28 @@ export interface TimeLogCreateWithoutTagsInput {
   user: UserCreateOneWithoutTimeLogsInput
 }
 
-export interface TimeLogUpsertWithWhereUniqueWithoutTagsInput {
-  where: TimeLogWhereUniqueInput
-  update: TimeLogUpdateWithoutTagsDataInput
-  create: TimeLogCreateWithoutTagsInput
-}
-
-export interface TimeTagUpdateManyWithoutUserInput {
-  create?: TimeTagCreateWithoutUserInput[] | TimeTagCreateWithoutUserInput
-  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  disconnect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  delete?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  update?: TimeTagUpdateWithWhereUniqueWithoutUserInput[] | TimeTagUpdateWithWhereUniqueWithoutUserInput
-  upsert?: TimeTagUpsertWithWhereUniqueWithoutUserInput[] | TimeTagUpsertWithWhereUniqueWithoutUserInput
-}
-
-export interface UserUpdateWithoutTimeLogsDataInput {
-  email?: String
-  password?: String
+export interface TimeTagUpdateWithoutUserDataInput {
   name?: String
-  role?: ROLE_TAG
-  timeTags?: TimeTagUpdateManyWithoutUserInput
+  description?: String
+  color?: String
+  isGeneral?: Boolean
+  timeLogs?: TimeLogUpdateManyWithoutTagsInput
+}
+
+export interface UserCreateOneWithoutTimeLogsInput {
+  create?: UserCreateWithoutTimeLogsInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface TimeTagSubscriptionWhereInput {
+  AND?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  OR?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  NOT?: TimeTagSubscriptionWhereInput[] | TimeTagSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: TimeTagWhereInput
 }
 
 export interface UserCreateWithoutTimeLogsInput {
@@ -1875,36 +2625,87 @@ export interface UserCreateWithoutTimeLogsInput {
   password: String
   name: String
   role?: ROLE_TAG
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
   timeTags?: TimeTagCreateManyWithoutUserInput
 }
 
-export interface TimeLogUpdateWithoutTagsDataInput {
-  title?: String
-  text?: String
-  date?: DateTime
-  isRange?: Boolean
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  deleted?: Boolean
-  user?: UserUpdateOneWithoutTimeLogsInput
+export interface ResetPasswordEmailWhereInput {
+  AND?: ResetPasswordEmailWhereInput[] | ResetPasswordEmailWhereInput
+  OR?: ResetPasswordEmailWhereInput[] | ResetPasswordEmailWhereInput
+  NOT?: ResetPasswordEmailWhereInput[] | ResetPasswordEmailWhereInput
+  userId?: ID_Input
+  userId_not?: ID_Input
+  userId_in?: ID_Input[] | ID_Input
+  userId_not_in?: ID_Input[] | ID_Input
+  userId_lt?: ID_Input
+  userId_lte?: ID_Input
+  userId_gt?: ID_Input
+  userId_gte?: ID_Input
+  userId_contains?: ID_Input
+  userId_not_contains?: ID_Input
+  userId_starts_with?: ID_Input
+  userId_not_starts_with?: ID_Input
+  userId_ends_with?: ID_Input
+  userId_not_ends_with?: ID_Input
+  link?: String
+  link_not?: String
+  link_in?: String[] | String
+  link_not_in?: String[] | String
+  link_lt?: String
+  link_lte?: String
+  link_gt?: String
+  link_gte?: String
+  link_contains?: String
+  link_not_contains?: String
+  link_starts_with?: String
+  link_not_starts_with?: String
+  link_ends_with?: String
+  link_not_ends_with?: String
 }
 
-export interface TimeTagCreateInput {
-  name: String
+export interface ConfirmEmailCreateInput {
+  userId: ID_Input
+  link: String
+}
+
+export interface ConfirmEmailWhereUniqueInput {
+  userId?: ID_Input
+  link?: String
+}
+
+export interface UserUpdateWithoutTimeTagsDataInput {
+  email?: String
+  password?: String
+  name?: String
+  role?: ROLE_TAG
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
+  timeLogs?: TimeLogUpdateManyWithoutUserInput
+}
+
+export interface TimeTagUpdateInput {
+  name?: String
   description?: String
+  color?: String
   isGeneral?: Boolean
-  user?: UserCreateOneWithoutTimeTagsInput
-  timeLogs?: TimeLogCreateManyWithoutTagsInput
+  user?: UserUpdateOneWithoutTimeTagsInput
+  timeLogs?: TimeLogUpdateManyWithoutTagsInput
 }
 
-export interface TimeLogUpdateManyWithoutTagsInput {
-  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  update?: TimeLogUpdateWithWhereUniqueWithoutTagsInput[] | TimeLogUpdateWithWhereUniqueWithoutTagsInput
-  upsert?: TimeLogUpsertWithWhereUniqueWithoutTagsInput[] | TimeLogUpsertWithWhereUniqueWithoutTagsInput
+export interface UserUpdateOneWithoutTimeTagsInput {
+  create?: UserCreateWithoutTimeTagsInput
+  connect?: UserWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: UserUpdateWithoutTimeTagsDataInput
+  upsert?: UserUpsertWithoutTimeTagsInput
+}
+
+export interface TimeLogUpsertWithWhereUniqueWithoutTagsInput {
+  where: TimeLogWhereUniqueInput
+  update: TimeLogUpdateWithoutTagsDataInput
+  create: TimeLogCreateWithoutTagsInput
 }
 
 export interface TimeLogCreateInput {
@@ -1920,93 +2721,27 @@ export interface TimeLogCreateInput {
   tags?: TimeTagCreateManyWithoutTimeLogsInput
 }
 
-export interface TimeTagUpdateWithWhereUniqueWithoutUserInput {
-  where: TimeTagWhereUniqueInput
-  data: TimeTagUpdateWithoutUserDataInput
+export interface TimeLogUpdateWithoutTagsDataInput {
+  title?: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user?: UserUpdateOneWithoutTimeLogsInput
 }
 
-export interface TimeTagWhereInput {
-  AND?: TimeTagWhereInput[] | TimeTagWhereInput
-  OR?: TimeTagWhereInput[] | TimeTagWhereInput
-  NOT?: TimeTagWhereInput[] | TimeTagWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
+export interface UserUpdateInput {
+  email?: String
+  password?: String
   name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  description?: String
-  description_not?: String
-  description_in?: String[] | String
-  description_not_in?: String[] | String
-  description_lt?: String
-  description_lte?: String
-  description_gt?: String
-  description_gte?: String
-  description_contains?: String
-  description_not_contains?: String
-  description_starts_with?: String
-  description_not_starts_with?: String
-  description_ends_with?: String
-  description_not_ends_with?: String
-  isGeneral?: Boolean
-  isGeneral_not?: Boolean
-  user?: UserWhereInput
-  timeLogs_every?: TimeLogWhereInput
-  timeLogs_some?: TimeLogWhereInput
-  timeLogs_none?: TimeLogWhereInput
-}
-
-export interface TimeLogCreateManyWithoutUserInput {
-  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-}
-
-export interface TimeLogUpdateManyWithoutUserInput {
-  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
-  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
-  update?: TimeLogUpdateWithWhereUniqueWithoutUserInput[] | TimeLogUpdateWithWhereUniqueWithoutUserInput
-  upsert?: TimeLogUpsertWithWhereUniqueWithoutUserInput[] | TimeLogUpsertWithWhereUniqueWithoutUserInput
+  role?: ROLE_TAG
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
+  timeLogs?: TimeLogUpdateManyWithoutUserInput
+  timeTags?: TimeTagUpdateManyWithoutUserInput
 }
 
 export interface TimeLogSubscriptionWhereInput {
@@ -2020,20 +2755,45 @@ export interface TimeLogSubscriptionWhereInput {
   node?: TimeLogWhereInput
 }
 
-export interface TimeLogUpdateWithWhereUniqueWithoutUserInput {
-  where: TimeLogWhereUniqueInput
-  data: TimeLogUpdateWithoutUserDataInput
+export interface TimeLogUpdateManyWithoutUserInput {
+  create?: TimeLogCreateWithoutUserInput[] | TimeLogCreateWithoutUserInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  update?: TimeLogUpdateWithWhereUniqueWithoutUserInput[] | TimeLogUpdateWithWhereUniqueWithoutUserInput
+  upsert?: TimeLogUpsertWithWhereUniqueWithoutUserInput[] | TimeLogUpsertWithWhereUniqueWithoutUserInput
 }
 
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
+export interface TimeLogUpdateInput {
+  title?: String
+  text?: String
+  date?: DateTime
+  isRange?: Boolean
+  startTime?: DateTime
+  endTime?: DateTime
+  totalTime?: Int
+  deleted?: Boolean
+  user?: UserUpdateOneWithoutTimeLogsInput
+  tags?: TimeTagUpdateManyWithoutTimeLogsInput
+}
+
+export interface ConfirmEmailUpdateInput {
+  userId?: ID_Input
+  link?: String
+}
+
+export interface TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput {
+  where: TimeTagWhereUniqueInput
+  data: TimeTagUpdateWithoutTimeLogsDataInput
+}
+
+export interface TimeTagUpdateManyWithoutTimeLogsInput {
+  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
+  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  disconnect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  delete?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
+  update?: TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput[] | TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput
+  upsert?: TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput[] | TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput
 }
 
 export interface TimeLogUpdateWithoutUserDataInput {
@@ -2048,117 +2808,43 @@ export interface TimeLogUpdateWithoutUserDataInput {
   tags?: TimeTagUpdateManyWithoutTimeLogsInput
 }
 
-export interface TimeTagWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface TimeTagUpdateManyWithoutTimeLogsInput {
-  create?: TimeTagCreateWithoutTimeLogsInput[] | TimeTagCreateWithoutTimeLogsInput
-  connect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  disconnect?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  delete?: TimeTagWhereUniqueInput[] | TimeTagWhereUniqueInput
-  update?: TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput[] | TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput
-  upsert?: TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput[] | TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput
-}
-
-export interface UserUpsertWithoutTimeLogsInput {
-  update: UserUpdateWithoutTimeLogsDataInput
-  create: UserCreateWithoutTimeLogsInput
-}
-
-export interface TimeTagUpdateWithWhereUniqueWithoutTimeLogsInput {
-  where: TimeTagWhereUniqueInput
-  data: TimeTagUpdateWithoutTimeLogsDataInput
-}
-
-export interface TimeLogUpdateWithWhereUniqueWithoutTagsInput {
+export interface TimeLogUpdateWithWhereUniqueWithoutUserInput {
   where: TimeLogWhereUniqueInput
-  data: TimeLogUpdateWithoutTagsDataInput
+  data: TimeLogUpdateWithoutUserDataInput
 }
 
-export interface TimeTagUpdateWithoutTimeLogsDataInput {
-  name?: String
-  description?: String
-  isGeneral?: Boolean
-  user?: UserUpdateOneWithoutTimeTagsInput
-}
-
-export interface UserCreateInput {
-  email: String
-  password: String
-  name: String
-  role?: ROLE_TAG
-  timeLogs?: TimeLogCreateManyWithoutUserInput
-  timeTags?: TimeTagCreateManyWithoutUserInput
-}
-
-export interface TimeTagUpsertWithWhereUniqueWithoutTimeLogsInput {
-  where: TimeTagWhereUniqueInput
-  update: TimeTagUpdateWithoutTimeLogsDataInput
-  create: TimeTagCreateWithoutTimeLogsInput
-}
-
-export interface UserUpsertWithoutTimeTagsInput {
-  update: UserUpdateWithoutTimeTagsDataInput
-  create: UserCreateWithoutTimeTagsInput
-}
-
-export interface UserUpdateWithoutTimeTagsDataInput {
+export interface UserUpdateWithoutTimeLogsDataInput {
   email?: String
   password?: String
   name?: String
   role?: ROLE_TAG
-  timeLogs?: TimeLogUpdateManyWithoutUserInput
+  confirmedEmail?: Boolean
+  resetPasswordEmail?: Boolean
+  timeTags?: TimeTagUpdateManyWithoutUserInput
 }
 
-export interface UserUpdateOneWithoutTimeTagsInput {
-  create?: UserCreateWithoutTimeTagsInput
-  connect?: UserWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: UserUpdateWithoutTimeTagsDataInput
-  upsert?: UserUpsertWithoutTimeTagsInput
+export interface TimeTagWhereUniqueInput {
+  id?: ID_Input
 }
 
-export interface TimeTagUpdateInput {
-  name?: String
-  description?: String
-  isGeneral?: Boolean
-  user?: UserUpdateOneWithoutTimeTagsInput
-  timeLogs?: TimeLogUpdateManyWithoutTagsInput
+export interface ResetPasswordEmailSubscriptionWhereInput {
+  AND?: ResetPasswordEmailSubscriptionWhereInput[] | ResetPasswordEmailSubscriptionWhereInput
+  OR?: ResetPasswordEmailSubscriptionWhereInput[] | ResetPasswordEmailSubscriptionWhereInput
+  NOT?: ResetPasswordEmailSubscriptionWhereInput[] | ResetPasswordEmailSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ResetPasswordEmailWhereInput
 }
 
-export interface TimeLogCreateWithoutUserInput {
-  title: String
-  text?: String
-  date?: DateTime
-  isRange?: Boolean
-  startTime?: DateTime
-  endTime?: DateTime
-  totalTime?: Int
-  deleted?: Boolean
-  tags?: TimeTagCreateManyWithoutTimeLogsInput
-}
-
-export interface TimeTagUpdateWithoutUserDataInput {
-  name?: String
-  description?: String
-  isGeneral?: Boolean
-  timeLogs?: TimeLogUpdateManyWithoutTagsInput
-}
-
-export interface UserUpdateOneWithoutTimeLogsInput {
-  create?: UserCreateWithoutTimeLogsInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutTimeLogsDataInput
-  upsert?: UserUpsertWithoutTimeLogsInput
-}
-
-export interface TimeTagUpsertWithWhereUniqueWithoutUserInput {
-  where: TimeTagWhereUniqueInput
-  update: TimeTagUpdateWithoutUserDataInput
-  create: TimeTagCreateWithoutUserInput
+export interface TimeLogUpdateManyWithoutTagsInput {
+  create?: TimeLogCreateWithoutTagsInput[] | TimeLogCreateWithoutTagsInput
+  connect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  disconnect?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  delete?: TimeLogWhereUniqueInput[] | TimeLogWhereUniqueInput
+  update?: TimeLogUpdateWithWhereUniqueWithoutTagsInput[] | TimeLogUpdateWithWhereUniqueWithoutTagsInput
+  upsert?: TimeLogUpsertWithWhereUniqueWithoutTagsInput[] | TimeLogUpsertWithWhereUniqueWithoutTagsInput
 }
 
 /*
@@ -2167,6 +2853,11 @@ export interface TimeTagUpsertWithWhereUniqueWithoutUserInput {
  */
 export interface Node {
   id: ID_Output
+}
+
+export interface ResetPasswordEmail {
+  userId: ID_Output
+  link: String
 }
 
 export interface TimeLogPreviousValues {
@@ -2183,22 +2874,44 @@ export interface TimeLogPreviousValues {
   deleted?: Boolean
 }
 
+/*
+ * A connection to a list of items.
+
+ */
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
+}
+
 export interface TimeTag extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
   name: String
   description?: String
+  color: String
   user?: User
   isGeneral?: Boolean
   timeLogs?: TimeLog[]
 }
 
-export interface TimeTagSubscriptionPayload {
-  mutation: MutationType
-  node?: TimeTag
-  updatedFields?: String[]
-  previousValues?: TimeTagPreviousValues
+export interface User extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  name: String
+  timeLogs?: TimeLog[]
+  timeTags?: TimeTag[]
+  role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
+}
+
+export interface BatchPayload {
+  count: Long
 }
 
 export interface AggregateTimeLog {
@@ -2215,8 +2928,11 @@ export interface TimeLogConnection {
   aggregate: AggregateTimeLog
 }
 
-export interface BatchPayload {
-  count: Long
+export interface TimeLogSubscriptionPayload {
+  mutation: MutationType
+  node?: TimeLog
+  updatedFields?: String[]
+  previousValues?: TimeLogPreviousValues
 }
 
 /*
@@ -2226,17 +2942,6 @@ export interface BatchPayload {
 export interface TimeTagEdge {
   node: TimeTag
   cursor: String
-}
-
-export interface TimeLogSubscriptionPayload {
-  mutation: MutationType
-  node?: TimeLog
-  updatedFields?: String[]
-  previousValues?: TimeLogPreviousValues
-}
-
-export interface AggregateUser {
-  count: Int
 }
 
 export interface TimeLog extends Node {
@@ -2255,6 +2960,67 @@ export interface TimeLog extends Node {
   tags?: TimeTag[]
 }
 
+export interface AggregateResetPasswordEmail {
+  count: Int
+}
+
+export interface TimeTagPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  name: String
+  description?: String
+  color: String
+  isGeneral?: Boolean
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ResetPasswordEmailConnection {
+  pageInfo: PageInfo
+  edges: ResetPasswordEmailEdge[]
+  aggregate: AggregateResetPasswordEmail
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ConfirmEmailEdge {
+  node: ConfirmEmail
+  cursor: String
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  name: String
+  role: ROLE_TAG
+  confirmedEmail: Boolean
+  resetPasswordEmail: Boolean
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+export interface ConfirmEmail {
+  userId: ID_Output
+  link: String
+}
+
 /*
  * Information about pagination in a connection.
 
@@ -2266,52 +3032,71 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface User extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  email: String
-  password: String
-  name: String
-  timeLogs?: TimeLog[]
-  timeTags?: TimeTag[]
-  role: ROLE_TAG
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  email: String
-  password: String
-  name: String
-  role: ROLE_TAG
-}
-
-export interface UserSubscriptionPayload {
+export interface ConfirmEmailSubscriptionPayload {
   mutation: MutationType
-  node?: User
+  node?: ConfirmEmail
   updatedFields?: String[]
-  previousValues?: UserPreviousValues
+  previousValues?: ConfirmEmailPreviousValues
 }
 
-export interface TimeTagPreviousValues {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  name: String
-  description?: String
-  isGeneral?: Boolean
+export interface AggregateTimeTag {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ResetPasswordEmailEdge {
+  node: ResetPasswordEmail
+  cursor: String
+}
+
+export interface ResetPasswordEmailPreviousValues {
+  userId: ID_Output
+  link: String
+}
+
+export interface ResetPasswordEmailSubscriptionPayload {
+  mutation: MutationType
+  node?: ResetPasswordEmail
+  updatedFields?: String[]
+  previousValues?: ResetPasswordEmailPreviousValues
+}
+
+export interface TimeTagSubscriptionPayload {
+  mutation: MutationType
+  node?: TimeTag
+  updatedFields?: String[]
+  previousValues?: TimeTagPreviousValues
+}
+
+export interface ConfirmEmailPreviousValues {
+  userId: ID_Output
+  link: String
+}
+
+export interface AggregateConfirmEmail {
+  count: Int
 }
 
 /*
  * A connection to a list of items.
 
  */
-export interface UserConnection {
+export interface TimeTagConnection {
   pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
+  edges: TimeTagEdge[]
+  aggregate: AggregateTimeTag
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface TimeLogEdge {
+  node: TimeLog
+  cursor: String
 }
 
 /*
@@ -2327,29 +3112,11 @@ export interface UserEdge {
  * A connection to a list of items.
 
  */
-export interface TimeTagConnection {
+export interface ConfirmEmailConnection {
   pageInfo: PageInfo
-  edges: TimeTagEdge[]
-  aggregate: AggregateTimeTag
+  edges: ConfirmEmailEdge[]
+  aggregate: AggregateConfirmEmail
 }
-
-export interface AggregateTimeTag {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface TimeLogEdge {
-  node: TimeLog
-  cursor: String
-}
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -2369,8 +3136,13 @@ Long can represent values between -(2^63) and 2^63 - 1.
 export type Long = string
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string
+
+export type DateTime = Date | string
+
+/*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean
-
-export type DateTime = Date | string

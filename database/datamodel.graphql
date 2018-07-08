@@ -8,14 +8,27 @@ type User {
   timeLogs: [TimeLog!]! @relation(name: "TimeLogsByUser", onDelete: SET_NULL)
   timeTags: [TimeTag!]! @relation(name:"TimeTagsByUser", onDelete: SET_NULL)
   role: ROLE_TAG! @default(value: "CUSTOMER")
+
+  confirmedEmail: Boolean! @default(value: "false")
+  resetPasswordEmail: Boolean! @default(value: "false")
 }
 
+type ConfirmEmail {
+  userId: ID! @unique
+  link: String! @unique
+}
+
+type ResetPasswordEmail {
+  userId: ID! @unique
+  link: String! @unique
+}
 type TimeTag {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
   description: String
+  color: String! 
   user: User @relation(name:"TimeTagsByUser", onDelete: SET_NULL)
   isGeneral: Boolean @default(value: "false")
   timeLogs: [TimeLog!]! @relation(name: "TimeTags", onDelete: SET_NULL)
