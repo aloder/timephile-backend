@@ -14,8 +14,8 @@ export const auth = {
     await sendMessage({
       from: "confirm@www.timephile.com",
       to: user.email,
-      subject:"Please Confirm your accound",
-      text: `http://www.timephile.com/confirm/${link}`
+      subject:"Please Confirm your account",
+      text: `http://${process.env.FRONTEND_DOMAIN}/confirm/${link}`
     })  
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
@@ -40,7 +40,7 @@ export const auth = {
       from: "confirm@www.timephile.com",
       to: user.email,
       subject:"Please confirm your account.",
-      text: `http://www.timephile.com/confirm/${link}`
+      text: `http://${process.env.FRONTEND_DOMAIN}/confirm/${link}`
     }) 
     return true;
   },
@@ -81,7 +81,7 @@ export const auth = {
         from: "reset@timephile.com", 
         to: email, 
         subject: "Here is your password reset link",
-        text: `http://www.timephile.com/resetpassword/${link}`
+        text: `http://${process.env.FRONTEND_DOMAIN}/resetpassword/${link}`
       });
       return true;
     }
