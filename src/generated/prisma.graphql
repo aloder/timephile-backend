@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Jul 05 2018 23:03:41 GMT-0500 (Central Daylight Time)
+# timestamp: Tue Jul 10 2018 23:03:37 GMT-0500 (Central Daylight Time)
 
 type AggregateConfirmEmail {
   count: Int!
@@ -1028,6 +1028,7 @@ type TimeTag implements Node {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   user(where: UserWhereInput): User
   isGeneral: Boolean
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
@@ -1047,6 +1048,7 @@ input TimeTagCreateInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
   timeLogs: TimeLogCreateManyWithoutTagsInput
@@ -1066,6 +1068,7 @@ input TimeTagCreateWithoutTimeLogsInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
 }
@@ -1074,6 +1077,7 @@ input TimeTagCreateWithoutUserInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   timeLogs: TimeLogCreateManyWithoutTagsInput
 }
@@ -1100,6 +1104,8 @@ enum TimeTagOrderByInput {
   description_DESC
   color_ASC
   color_DESC
+  deleted_ASC
+  deleted_DESC
   isGeneral_ASC
   isGeneral_DESC
 }
@@ -1111,6 +1117,7 @@ type TimeTagPreviousValues {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
 }
 
@@ -1157,6 +1164,7 @@ input TimeTagUpdateInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
   timeLogs: TimeLogUpdateManyWithoutTagsInput
@@ -1184,6 +1192,7 @@ input TimeTagUpdateWithoutTimeLogsDataInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
 }
@@ -1192,6 +1201,7 @@ input TimeTagUpdateWithoutUserDataInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   timeLogs: TimeLogUpdateManyWithoutTagsInput
 }
@@ -1431,6 +1441,10 @@ input TimeTagWhereInput {
 
   """All values not ending with the given string."""
   color_not_ends_with: String
+  deleted: Boolean
+
+  """All values that are not equal to given value."""
+  deleted_not: Boolean
   isGeneral: Boolean
 
   """All values that are not equal to given value."""

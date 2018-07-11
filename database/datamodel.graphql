@@ -29,6 +29,7 @@ type TimeTag {
   name: String!
   description: String
   color: String! 
+  deleted: Boolean @default(value: "false")
   user: User @relation(name:"TimeTagsByUser", onDelete: SET_NULL)
   isGeneral: Boolean @default(value: "false")
   timeLogs: [TimeLog!]! @relation(name: "TimeTags", onDelete: SET_NULL)

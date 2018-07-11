@@ -1120,6 +1120,7 @@ type TimeTag implements Node {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   user(where: UserWhereInput): User
   isGeneral: Boolean
   timeLogs(where: TimeLogWhereInput, orderBy: TimeLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TimeLog!]
@@ -1139,6 +1140,7 @@ input TimeTagCreateInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
   timeLogs: TimeLogCreateManyWithoutTagsInput
@@ -1158,6 +1160,7 @@ input TimeTagCreateWithoutTimeLogsInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   user: UserCreateOneWithoutTimeTagsInput
 }
@@ -1166,6 +1169,7 @@ input TimeTagCreateWithoutUserInput {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
   timeLogs: TimeLogCreateManyWithoutTagsInput
 }
@@ -1192,6 +1196,8 @@ enum TimeTagOrderByInput {
   description_DESC
   color_ASC
   color_DESC
+  deleted_ASC
+  deleted_DESC
   isGeneral_ASC
   isGeneral_DESC
 }
@@ -1203,6 +1209,7 @@ type TimeTagPreviousValues {
   name: String!
   description: String
   color: String!
+  deleted: Boolean
   isGeneral: Boolean
 }
 
@@ -1249,6 +1256,7 @@ input TimeTagUpdateInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
   timeLogs: TimeLogUpdateManyWithoutTagsInput
@@ -1276,6 +1284,7 @@ input TimeTagUpdateWithoutTimeLogsDataInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   user: UserUpdateOneWithoutTimeTagsInput
 }
@@ -1284,6 +1293,7 @@ input TimeTagUpdateWithoutUserDataInput {
   name: String
   description: String
   color: String
+  deleted: Boolean
   isGeneral: Boolean
   timeLogs: TimeLogUpdateManyWithoutTagsInput
 }
@@ -1523,6 +1533,10 @@ input TimeTagWhereInput {
 
   """All values not ending with the given string."""
   color_not_ends_with: String
+  deleted: Boolean
+
+  """All values that are not equal to given value."""
+  deleted_not: Boolean
   isGeneral: Boolean
 
   """All values that are not equal to given value."""
@@ -2046,6 +2060,8 @@ export type TimeTagOrderByInput =   'id_ASC' |
   'description_DESC' |
   'color_ASC' |
   'color_DESC' |
+  'deleted_ASC' |
+  'deleted_DESC' |
   'isGeneral_ASC' |
   'isGeneral_DESC'
 
@@ -2256,6 +2272,8 @@ export interface TimeTagWhereInput {
   color_not_starts_with?: String
   color_ends_with?: String
   color_not_ends_with?: String
+  deleted?: Boolean
+  deleted_not?: Boolean
   isGeneral?: Boolean
   isGeneral_not?: Boolean
   user?: UserWhereInput
@@ -2273,6 +2291,7 @@ export interface TimeTagUpdateWithoutTimeLogsDataInput {
   name?: String
   description?: String
   color?: String
+  deleted?: Boolean
   isGeneral?: Boolean
   user?: UserUpdateOneWithoutTimeTagsInput
 }
@@ -2290,6 +2309,7 @@ export interface TimeTagCreateInput {
   name: String
   description?: String
   color: String
+  deleted?: Boolean
   isGeneral?: Boolean
   user?: UserCreateOneWithoutTimeTagsInput
   timeLogs?: TimeLogCreateManyWithoutTagsInput
@@ -2514,6 +2534,7 @@ export interface TimeTagCreateWithoutTimeLogsInput {
   name: String
   description?: String
   color: String
+  deleted?: Boolean
   isGeneral?: Boolean
   user?: UserCreateOneWithoutTimeTagsInput
 }
@@ -2562,6 +2583,7 @@ export interface TimeTagCreateWithoutUserInput {
   name: String
   description?: String
   color: String
+  deleted?: Boolean
   isGeneral?: Boolean
   timeLogs?: TimeLogCreateManyWithoutTagsInput
 }
@@ -2600,6 +2622,7 @@ export interface TimeTagUpdateWithoutUserDataInput {
   name?: String
   description?: String
   color?: String
+  deleted?: Boolean
   isGeneral?: Boolean
   timeLogs?: TimeLogUpdateManyWithoutTagsInput
 }
@@ -2688,6 +2711,7 @@ export interface TimeTagUpdateInput {
   name?: String
   description?: String
   color?: String
+  deleted?: Boolean
   isGeneral?: Boolean
   user?: UserUpdateOneWithoutTimeTagsInput
   timeLogs?: TimeLogUpdateManyWithoutTagsInput
@@ -2891,6 +2915,7 @@ export interface TimeTag extends Node {
   name: String
   description?: String
   color: String
+  deleted?: Boolean
   user?: User
   isGeneral?: Boolean
   timeLogs?: TimeLog[]
@@ -2971,6 +2996,7 @@ export interface TimeTagPreviousValues {
   name: String
   description?: String
   color: String
+  deleted?: Boolean
   isGeneral?: Boolean
 }
 

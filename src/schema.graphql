@@ -43,6 +43,7 @@ type Mutation {
     totalTime: Int,
     addTagIds: [ID!]!,
     removeTagIds: [ID!]!
+    isRange: Boolean
   ): TimeLog
 
   createTimeTag(
@@ -50,6 +51,13 @@ type Mutation {
     color: String!
     description: String!
   ):TimeTag
+  updateTimeTag(
+    id: ID!
+    name: String
+    color: String
+    description: String
+    deleted: Boolean
+  ): TimeTag
 }
 
 

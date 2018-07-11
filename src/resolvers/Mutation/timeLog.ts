@@ -75,16 +75,7 @@ export const timeLog = {
     if (timeLog.user.id !== userId) {
       throw new Error("Not Authorized to delete");
     }
-    let isRange = timeLog.isRange;
-    const { totalTime, startTime, endTime } = args;
-    if (totalTime) {
-      isRange = false;
-    }
-    if (startTime || endTime) {
-      isRange = true;
-    }
     let data: TimeLogUpdateInput = {
-      isRange,
       tags: {
 
       },

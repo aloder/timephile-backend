@@ -27,5 +27,15 @@ export const timeTag = {
             return ctx.db.mutation.deleteTimeTag({ where: { id }}, info);
         }
         throw new Error('Not authorized');
+    },
+    async updateTimeTag(parent, { id, ...args}, ctx: Context, info){
+        const userId = getUserId(ctx);
+        console.log(args)
+        const timeTag = await ctx.db.query.timeTag({ where:{ id }}, "{ user { id } }");
+        console.log(timeTag)
+        if (timeTag.user.id === userId){
+            return ctx.db.mutation.updateTimeTag({ where: { id }, data:{...args}}, info);
+        }
+        throw new Error('Not authorized');
     }
 }
