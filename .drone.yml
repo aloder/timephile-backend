@@ -1,2 +1,6 @@
 pipeline:
-  
+  docker:
+    image: plugins/docker
+    repo: aloder/timephile-backend
+    tags: latest
+    secrets: [ docker_username, docker_password ]
