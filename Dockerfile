@@ -1,15 +1,13 @@
 FROM node:10.4.1 as builder
 
-RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
-
-COPY . .
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-ADD package.json /usr/src/app/package.json
-RUN npm install yarn -g
+COPY package.json yarn.lock ./
+RUN yarn
+COPY . ./
 RUN yarn build
 
 FROM node:10.4.1
+COPY --from=builder /usr/src/app/dist /usr/src/app/dist
+WORKDIR /usr/src/app
+EXPOSE 4000
 CMD ["node", "./dist/index.js"]
