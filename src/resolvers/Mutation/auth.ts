@@ -1,14 +1,21 @@
-import * as bcrypt from 'bcryptjs'
-import * as jwt from 'jsonwebtoken'
-import { Context } from '../../utils'
-import { sendMessage } from '../../util/mailgun';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid';
+
+import { sendMessage } from '../../util/mailgun';
+import { Context } from '../../utils';
+
 export const auth = {
   async signup(parent, args, ctx: Context, info) {
     const password = await bcrypt.hash(args.password, 10)
+    const checkUser = await ctx.db.query.user({ where: { email: args.email }})
+    if (checkUser != null){
+      throw new Error('Email already taken')
+    }
     const user = await ctx.db.mutation.createUser({
       data: { ...args, password },
     }, "{ id email}")
+    console.log(user);
     const link = uuid.v4();
     await ctx.db.mutation.createConfirmEmail({ data: {userId: user.id, link }});
     await sendMessage({
