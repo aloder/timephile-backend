@@ -1,6 +1,6 @@
 # Timephile Backend
 
-This complements https://github.com/aloder/timephile-frontend
+This compliments https://github.com/aloder/timephile-frontend
 
 ### Prerequisates
 * Docker
